@@ -5,7 +5,6 @@ description: In-app support for iOS apps and websites. Users write in from insid
 
 Feddy gives the people using your app or website a place to write in, and gives you one inbox to answer from. Replies show up inside the product, and by email when you have set up a sending domain. An assistant answers repeat questions from answers you approved, and hands everything else to you.
 
-![The Feddy inbox with a conversation open and the user's device details in the side panel](./assets/inbox.webp)
 
 ## Add Feddy to your product
 

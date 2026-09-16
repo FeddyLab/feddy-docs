@@ -49,7 +49,6 @@ By default a launcher appears bottom-right. If your site already has a **Support
 
 Open the page, click the launcher, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel, and the launcher shows an unread count until the visitor reads it.
 
-![The Feddy panel open over a page, showing a conversation with a reply from the team](../assets/web-verify.webp)
 
 ## Next steps
 

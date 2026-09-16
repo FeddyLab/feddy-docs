@@ -63,7 +63,6 @@ Form {
 
 Run the app, open the row, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the sheet and the row's badge shows `1` until the user reads it.
 
-![The Feddy sheet showing a conversation with a reply from the team](../assets/ios-verify.webp)
 
 ## Next steps
 
