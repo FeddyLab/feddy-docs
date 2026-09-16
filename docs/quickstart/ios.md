@@ -21,7 +21,7 @@ https://github.com/FeddyLab/feddy-ios
 Or add it to `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/FeddyLab/feddy-ios", from: "0.7.0")
+.package(url: "https://github.com/FeddyLab/feddy-ios", from: "0.6.2")
 ```
 
 ## 2. Initialize
