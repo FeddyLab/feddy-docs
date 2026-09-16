@@ -38,14 +38,14 @@ Feddy.identify({
 })
 ```
 
-Binds the visitor's anonymous contact to a user of your product. Safe to call before `init`; the call is queued and sent once the widget mounts. Does nothing without `userId`. Failures are logged with `console.warn` and never thrown. Details and merge rules are in [Identify users](../guides/identify-users).
+Binds the visitor's anonymous contact to a user of your product. Safe to call before `init`; the call is queued and sent once the widget mounts. Does nothing without `userId`. Failures are logged with `console.warn` and never thrown. Details and merge rules are in [Identify users](/docs/guides/identify-users/).
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `userId` | `string` | Your stable id for the user, 1 to 128 characters. |
 | `email` | `string` | Optional. Lets replies reach the user by email when your project has a verified sending domain. |
 | `name` | `string` | Optional. Shown in the inbox. |
-| `attributes` | `object` | Optional. Flat object of strings, numbers, and booleans. Limits are listed in [Identify users](../guides/identify-users). |
+| `attributes` | `object` | Optional. Flat object of strings, numbers, and booleans. Limits are listed in [Identify users](/docs/guides/identify-users/). |
 
 ## `Feddy.open()` and `Feddy.close()`
 

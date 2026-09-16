@@ -66,6 +66,6 @@ Run the app, open the row, and send a message. It appears in your Feddy inbox. R
 
 ## Next steps
 
-- [Identify users](../guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](../guides/unread-badge) for a custom row or a tab bar item.
-- [iOS SDK reference](../reference/ios) for every public call.
+- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/docs/guides/unread-badge/) for a custom row or a tab bar item.
+- [iOS SDK reference](/docs/reference/ios/) for every public call.

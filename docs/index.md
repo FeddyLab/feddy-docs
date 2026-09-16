@@ -8,23 +8,23 @@ Feddy gives the people using your app or website a place to write in, and gives 
 
 ## Add Feddy to your product
 
-- [iOS quickstart](./quickstart/ios): Swift Package, iOS 15 and later, no dependencies.
-- [Web quickstart](./quickstart/web): one script tag, no build step.
+- [iOS quickstart](/docs/quickstart/ios/): Swift Package, iOS 15 and later, no dependencies.
+- [Web quickstart](/docs/quickstart/web/): one script tag, no build step.
 
 ## Learn how it works
 
-- [Projects](./concepts/projects): one project per app or site, and the public project ID.
-- [Conversations](./concepts/conversations): statuses, topics, notes, and attachments.
-- [Contacts](./concepts/contacts): anonymous and identified users, and what you know about them.
-- [Assistant](./concepts/assistant): keyword answers, AI answers, and the Copilot in your inbox.
-- [Team](./concepts/team): members, notifications, and replying by email.
+- [Projects](/docs/concepts/projects/): one project per app or site, and the public project ID.
+- [Conversations](/docs/concepts/conversations/): statuses, topics, notes, and attachments.
+- [Contacts](/docs/concepts/contacts/): anonymous and identified users, and what you know about them.
+- [Assistant](/docs/concepts/assistant/): keyword answers, AI answers, and the Copilot in your inbox.
+- [Team](/docs/concepts/team/): members, notifications, and replying by email.
 
 ## Go further
 
-- [Identify users](./guides/identify-users)
-- [Unread badge](./guides/unread-badge)
-- [iOS SDK reference](./reference/ios) and [Web SDK reference](./reference/web)
-- [Troubleshooting](./troubleshooting)
+- [Identify users](/docs/guides/identify-users/)
+- [Unread badge](/docs/guides/unread-badge/)
+- [iOS SDK reference](/docs/reference/ios/) and [Web SDK reference](/docs/reference/web/)
+- [Troubleshooting](/docs/troubleshooting/)
 
 ## Working with an AI coding agent
 

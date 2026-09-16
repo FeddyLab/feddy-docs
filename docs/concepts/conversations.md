@@ -33,7 +33,7 @@ The SDK attaches what it can see, and the inbox shows it beside the thread:
 - iOS: device model, OS version, app version and build, locale.
 - Web: page URL, browser, OS, viewport, referrer, locale.
 
-Anything you send with `identify` appears as well. See [Contacts](./contacts).
+Anything you send with `identify` appears as well. See [Contacts](/docs/concepts/contacts/).
 
 ## Replies and notes
 

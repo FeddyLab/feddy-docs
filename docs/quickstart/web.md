@@ -52,6 +52,6 @@ Open the page, click the launcher, and send a message. It appears in your Feddy 
 
 ## Next steps
 
-- [Identify users](../guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](../guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](../reference/web) for every option and call.
+- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/docs/guides/unread-badge/) to drive your own badge from `onUnreadCountChanged`.
+- [Web SDK reference](/docs/reference/web/) for every option and call.

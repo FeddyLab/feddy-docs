@@ -40,10 +40,10 @@ Same as `present()`, but opens straight into the compose form.
 static func identify(userId: String, email: String? = nil, name: String? = nil, attributes: [String: Any] = [:])
 ```
 
-Binds the device's anonymous contact to a user of your app. Call it after login and whenever attributes change. Does nothing before `configure`. Details and merge rules are in [Identify users](../guides/identify-users).
+Binds the device's anonymous contact to a user of your app. Call it after login and whenever attributes change. Does nothing before `configure`. Details and merge rules are in [Identify users](/docs/guides/identify-users/).
 
 - `userId`: your stable id for the user, 1 to 128 characters.
-- `attributes`: values may be `String`, `Bool`, any number, or `Date`. `Date` is sent as an ISO 8601 string. Other types are dropped on the device. Server-side limits are listed in [Identify users](../guides/identify-users).
+- `attributes`: values may be `String`, `Bool`, any number, or `Date`. `Date` is sent as an ISO 8601 string. Other types are dropped on the device. Server-side limits are listed in [Identify users](/docs/guides/identify-users/).
 
 ## `Feddy.unreadCount(_:)`
 
