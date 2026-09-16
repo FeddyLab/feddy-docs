@@ -1,0 +1,62 @@
+---
+title: Identify users
+description: Bind conversations to a logged-in user so you know who wrote in and replies can reach them by email.
+---
+
+By the end of this page conversations from a logged-in user show their name and attributes in the inbox, and their history follows them across devices.
+
+Every install works without this step. Until you call `identify`, each device is an anonymous contact whose id lives in the Keychain on iOS and in `localStorage` on the web.
+
+## When to call it
+
+Call `identify` right after login, and again whenever an attribute you send changes. Calling it on every launch is fine; it is an upsert.
+
+```swift
+Feddy.identify(
+    userId: user.id,
+    email: user.email,
+    attributes: ["plan": user.plan, "is_member": user.isMember, "renews_at": user.renewsAt]
+)
+```
+
+```js
+Feddy.identify({
+  userId: user.id,
+  email: user.email,
+  attributes: { plan: user.plan, is_member: user.isMember },
+})
+```
+
+## What happens on the server
+
+- The device's anonymous contact gets your `userId` as its external id, plus the email, name, and attributes you sent.
+- If a contact with the same `userId` already exists, this device's conversations move onto it and the duplicate anonymous contact is deleted. The user sees one history on every device they log in on.
+- Attributes replace the previous set as a whole. Send every attribute you want to keep on each call; a key you leave out is removed. Email and name are kept when you omit them.
+
+## Attributes
+
+Send flat key-value pairs about the user that help you answer faster: plan, membership status, trial end date, account age. Values may be strings, numbers, booleans, or dates as ISO 8601 strings.
+
+Anything over the limits below is dropped silently. The request never fails because of attributes, so a mistake in your integration cannot stop a user from writing in.
+
+| Limit | Value |
+| --- | --- |
+| Keys per contact | 20 |
+| Key length | 40 characters |
+| Value length | 255 characters after serialization |
+| Total size | 8 KB |
+| Value types | string, number, boolean, ISO 8601 date string |
+
+Nested objects and arrays are dropped.
+
+In the dashboard, **Settings → Data attributes** lists every key you have sent, with its inferred type. Give a key a label to change how it appears in the inbox, switch on **In list** to show it as a column, and **Filterable** to filter conversations by it.
+
+:::note
+Attributes are for facts about the user. Device model, OS version, app version, and locale are collected by the SDK and shown with every conversation already.
+:::
+
+## Email
+
+Pass `email` when you have it. When your project has a verified sending domain, replies are also emailed to the user, so they hear back even if they never reopen the app. Without a verified domain the email is stored but no mail is sent.
+
+If you do not pass an email, the widget may ask the user for one after their first message, and only when your project has a verified sending domain.

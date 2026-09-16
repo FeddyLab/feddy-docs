@@ -1,0 +1,7 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Feddy",
+  "description": "In-app support for iOS apps and websites: users write in from inside the product, replies land back where they asked.",
+  "folders": ["docs"],
+  "excludeFolders": ["docs/assets"]
+}

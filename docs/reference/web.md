@@ -1,0 +1,74 @@
+---
+title: Web SDK reference
+description: Every option and call in the Feddy web widget.
+---
+
+The widget is one script with no dependencies. It defines a global `Feddy` object with four methods and one callback.
+
+```html
+<script src="https://core.feddy.app/sdk/feddy.js"></script>
+```
+
+The script is served with a one-hour cache and open CORS, so it can be loaded from any origin. It renders inside a shadow root attached to `div#feddy-widget`, so your page styles and the widget's never affect each other. Keyboard events inside the widget do not reach your page.
+
+## `Feddy.init(options)`
+
+```js
+Feddy.init({ projectId: 'fd_XXXXXXXXXXXXXXXX' })
+```
+
+Mounts the widget. Runs once per page; later calls are ignored. If called while the document is still loading, the widget mounts on `DOMContentLoaded`. Logs `[Feddy] init requires a projectId` and does nothing without a project ID.
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `projectId` | `string` | required | Copied from **Settings → Install** in the dashboard. Public by design. |
+| `apiUrl` | `string` | `https://core.feddy.app` | Point at a local server during development. |
+| `launcher` | `boolean` | `true` | Show the floating launcher bottom-right. Set `false` to open the panel from your own control. |
+| `sounds` | `boolean` | `true` | Play a chime when a reply arrives. |
+| `locale` | `string` | `navigator.language` | Force a language, any supported BCP 47 tag such as `'ja'` or `'zh-TW'`. |
+
+## `Feddy.identify(options)`
+
+```js
+Feddy.identify({
+  userId: 'u_123',
+  email: 'user@example.com',
+  name: 'Ada',
+  attributes: { plan: 'pro', credits_left: 42 },
+})
+```
+
+Binds the visitor's anonymous contact to a user of your product. Safe to call before `init`; the call is queued and sent once the widget mounts. Does nothing without `userId`. Failures are logged with `console.warn` and never thrown. Details and merge rules are in [Identify users](../guides/identify-users).
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `userId` | `string` | Your stable id for the user, 1 to 128 characters. |
+| `email` | `string` | Optional. Lets replies reach the user by email when your project has a verified sending domain. |
+| `name` | `string` | Optional. Shown in the inbox. |
+| `attributes` | `object` | Optional. Flat object of strings, numbers, and booleans. Limits are listed in [Identify users](../guides/identify-users). |
+
+## `Feddy.open()` and `Feddy.close()`
+
+```js
+document.querySelector('#help').addEventListener('click', () => Feddy.open())
+```
+
+Open or close the panel from your own element. `open()` shows the conversation list. Both do nothing before `init` has mounted the widget.
+
+## `Feddy.onUnreadCountChanged`
+
+```js
+Feddy.onUnreadCountChanged = (count) => {
+  badge.textContent = count > 0 ? String(count) : ''
+}
+```
+
+Assign a function to receive the unread count whenever it changes. The widget polls every 45 seconds and again each time the tab becomes visible. Use it to drive your own badge when the launcher is off.
+
+## Behavior you do not configure
+
+- **Identity**: an anonymous id is stored in `localStorage` under `feddy_anon_id`. Clearing site data resets it, which is why the widget offers to collect an email after the first message when your project has a verified sending domain.
+- **Language**: the widget ships in English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, French, Spanish, Brazilian Portuguese, and Russian. `zh-TW`, `zh-HK`, and `zh-MO` resolve to Traditional Chinese; `pt` resolves to Brazilian Portuguese. Other tags fall back to English. Text you write in the dashboard is translated server-side per project settings.
+- **Attachments**: up to 5 images per message, 10 MB each before resizing, resized to a 2000 px long edge and encoded as WebP in the browser.
+- **Branding**: name, accent color, and logo come from the dashboard. The accent color is applied as `--fd-accent` inside the shadow root; the widget picks a readable text color for it.
+- **Launcher**: fixed bottom-right, 56 px, with an unread count badge. Its `z-index` is `2147483000`.
