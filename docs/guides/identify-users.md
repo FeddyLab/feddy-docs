@@ -29,9 +29,9 @@ Feddy.identify({
 
 ## What happens on the server
 
-- The device's anonymous contact gets your `userId` as its external id, plus the email, name, and attributes you sent.
+- The device's anonymous contact gets your `userId` as its external id, plus the email, name, avatar URL, and attributes you sent.
 - If a contact with the same `userId` already exists, this device's conversations move onto it and the duplicate anonymous contact is deleted. The user sees one history on every device they log in on.
-- Attributes replace the previous set as a whole. Send every attribute you want to keep on each call; a key you leave out is removed. Email and name are kept when you omit them.
+- Attributes replace the previous set as a whole. Send every attribute you want to keep on each call; a key you leave out is removed. Email, name, and avatar URL are kept when you omit them.
 
 ## Attributes
 

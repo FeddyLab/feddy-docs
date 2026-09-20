@@ -34,15 +34,16 @@ Opens the conversation list as a page sheet over the top-most view controller. W
 
 Same as `present()`, but opens straight into the compose form.
 
-## `Feddy.identify(userId:email:name:attributes:)`
+## `Feddy.identify(userId:email:name:avatarUrl:attributes:)`
 
 ```swift
-static func identify(userId: String, email: String? = nil, name: String? = nil, attributes: [String: Any] = [:])
+static func identify(userId: String, email: String? = nil, name: String? = nil, avatarUrl: String? = nil, attributes: [String: Any] = [:])
 ```
 
 Binds the device's anonymous contact to a user of your app. Call it after login and whenever attributes change. Does nothing before `configure`. Details and merge rules are in [Identify users](/docs/guides/identify-users/).
 
 - `userId`: your stable id for the user, 1 to 128 characters.
+- `avatarUrl`: optional absolute `http(s)` URL of a picture you already have of the user, shown in the inbox. Anything else is ignored.
 - `attributes`: values may be `String`, `Bool`, any number, or `Date`. `Date` is sent as an ISO 8601 string. Other types are dropped on the device. Server-side limits are listed in [Identify users](/docs/guides/identify-users/).
 
 ## `Feddy.unreadCount(_:)`

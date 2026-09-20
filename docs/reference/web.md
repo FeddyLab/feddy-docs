@@ -34,6 +34,7 @@ Feddy.identify({
   userId: 'u_123',
   email: 'user@example.com',
   name: 'Ada',
+  avatarUrl: 'https://cdn.example.com/avatars/u_123.png',
   attributes: { plan: 'pro', credits_left: 42 },
 })
 ```
@@ -45,6 +46,7 @@ Binds the visitor's anonymous contact to a user of your product. Safe to call be
 | `userId` | `string` | Your stable id for the user, 1 to 128 characters. |
 | `email` | `string` | Optional. Lets replies reach the user by email when your project has a verified sending domain. |
 | `name` | `string` | Optional. Shown in the inbox. |
+| `avatarUrl` | `string` | Optional. Absolute `http(s)` URL of a picture you already have of the user, shown in the inbox. Anything else is ignored. |
 | `attributes` | `object` | Optional. Flat object of strings, numbers, and booleans. Limits are listed in [Identify users](/docs/guides/identify-users/). |
 
 ## `Feddy.open()` and `Feddy.close()`
