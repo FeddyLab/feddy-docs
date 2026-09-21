@@ -1,0 +1,48 @@
+---
+title: Webflow
+description: Add the Feddy widget to a Webflow site by pasting two lines into Custom code.
+---
+
+By the end of this page your site has a support launcher, and a message sent from it shows up in your Feddy inbox.
+
+## Prerequisites
+
+- A Feddy project and its project ID from **Settings → Install**. [Create a project](/docs/getting-started/create-a-project/) if you have none.
+- Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
+
+<Steps>
+<Step>
+## Paste into Custom code
+
+In Webflow open **Site settings → Custom code** and paste into **Footer code**:
+
+```html title="Site settings → Custom code → Footer code"
+<script src="https://core.feddy.app/sdk/feddy.js"></script>
+<script>
+  Feddy.init({ projectId: 'fd_XXXXXXXXXXXXXXXX' })
+</script>
+```
+
+Publish the site. Custom code is not applied in the Designer preview.
+
+<Callout>
+The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+</Callout>
+</Step>
+<Step>
+## Choose an entry point
+
+The floating launcher appears bottom-right on every page. To open the panel from a button you designed, give the button an ID such as `help`, pass `launcher: false` to `init`, and add one line after it: `document.querySelector('#help').addEventListener('click', () => Feddy.open())`.
+</Step>
+<Step>
+## Verify
+
+Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
+</Step>
+</Steps>
+
+## Next steps
+
+- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/docs/guides/unread-badge/) to drive your own badge from `onUnreadCountChanged`.
+- [Web SDK reference](/docs/reference/web/) for every option and call.

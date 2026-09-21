@@ -9,10 +9,13 @@
 
 Source for the developer documentation published at https://feddy.app/docs.
 
-- `docs/quickstart` — add Feddy to an iOS app or a website
+- `docs/getting-started` — create a project, set up with an AI agent
+- `docs/quickstart` — one page per platform: SwiftUI, UIKit, JavaScript, React, Vue, Svelte, Next.js, Astro, WordPress, Webflow
 - `docs/concepts` — projects, conversations, contacts, the assistant, your team
-- `docs/reference` — the full public API of each SDK
 - `docs/guides` — identifying users, unread badges
-- `docs/troubleshooting.md`
+- `docs/reference` — the full public API of each SDK
+- `docs/troubleshooting.mdx`
+
+Pages are MDX rendered with Fumadocs; `meta.json` files set the sidebar order.
 
 Fixes and clarifications are welcome as pull requests.

@@ -1,26 +1,29 @@
 ---
-title: Web quickstart
-description: Add the Feddy widget to a website with one script tag and send your first message.
+title: JavaScript
+description: Add the Feddy widget to any page with one script tag and send your first message.
 ---
 
 By the end of this page your site has a support launcher, and a message sent from it shows up in your Feddy inbox.
 
 ## Prerequisites
 
-- A Feddy project. Create one in the dashboard, then copy the project ID from **Settings → Install**.
+- A Feddy project and its project ID from **Settings → Install**. [Create a project](/docs/getting-started/create-a-project/) if you have none.
 - A page you can edit. There is no build step and nothing to install from npm.
 
-## 1. Install
+<Steps>
+<Step>
+## Install
 
 Load the widget before the closing `</body>` tag:
 
-```html
+```html title="index.html"
 <script src="https://core.feddy.app/sdk/feddy.js"></script>
 ```
 
 The file is a single self-contained script with no dependencies. It renders inside a shadow root, so your CSS and the widget's never touch.
-
-## 2. Initialize
+</Step>
+<Step>
+## Initialize
 
 ```html
 <script>
@@ -30,11 +33,12 @@ The file is a single self-contained script with no dependencies. It renders insi
 
 `init` runs once per page; later calls are ignored. If the script loads before the DOM is ready, the widget mounts on `DOMContentLoaded`.
 
-:::note
+<Callout>
 The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
-:::
-
-## 3. Choose an entry point
+</Callout>
+</Step>
+<Step>
+## Choose an entry point
 
 By default a launcher appears bottom-right. If your site already has a **Support** or **Feedback** control, turn the launcher off and open the panel from your own element:
 
@@ -44,11 +48,13 @@ By default a launcher appears bottom-right. If your site already has a **Support
   document.querySelector('#help').addEventListener('click', () => Feddy.open())
 </script>
 ```
-
-## 4. Verify
+</Step>
+<Step>
+## Verify
 
 Open the page, click the launcher, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel, and the launcher shows an unread count until the visitor reads it.
-
+</Step>
+</Steps>
 
 ## Next steps
 

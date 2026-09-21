@@ -1,0 +1,22 @@
+---
+title: Set up with an AI agent
+description: Hand the install to Claude Code, Cursor, or any coding agent that can read these docs.
+---
+
+Every install in these docs is a few lines of code in a known place. An agent can do it for you if it knows your project ID and where the docs are.
+
+## The prompt in your dashboard
+
+Every project's **Settings → Install** page has a prompt written for coding agents. It contains your project ID and the steps for your platform, so you can paste it into the agent as is. Read what the agent changed before you ship it; the [quickstart](/docs/) for your platform shows what a correct install looks like.
+
+## Where agents can read these docs
+
+- **Context7**: the docs are indexed from the public [FeddyLab/feddy-docs](https://github.com/FeddyLab/feddy-docs) repository. Agents with the Context7 tool can look up `feddy` directly.
+- **llms.txt**: [feddy.app/llms.txt](https://feddy.app/llms.txt) lists every page with a one-line summary; [feddy.app/llms-full.txt](https://feddy.app/llms-full.txt) is the full text of every page in one file.
+- **The SDK sources**: the iOS package at [FeddyLab/feddy-ios](https://github.com/FeddyLab/feddy-ios) is public. Every call the docs mention is in there.
+
+## What to check afterwards
+
+- `configure` or `init` runs once, with your project ID, before any other Feddy call.
+- The entry point is somewhere users already look for help, usually Settings.
+- A message sent from a debug build shows up in your inbox. Reply to it and the reply shows up in the app.

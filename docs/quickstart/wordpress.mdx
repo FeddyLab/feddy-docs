@@ -1,0 +1,48 @@
+---
+title: WordPress
+description: Add the Feddy widget to a WordPress site from your theme or a small plugin.
+---
+
+By the end of this page your site has a support launcher, and a message sent from it shows up in your Feddy inbox.
+
+## Prerequisites
+
+- A Feddy project and its project ID from **Settings → Install**. [Create a project](/docs/getting-started/create-a-project/) if you have none.
+- Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
+
+<Steps>
+<Step>
+## Enqueue the script
+
+Add this to your theme's `functions.php`, or to a plugin file if you would rather not edit the theme:
+
+```php title="functions.php"
+add_action('wp_enqueue_scripts', function () {
+  wp_enqueue_script('feddy', 'https://core.feddy.app/sdk/feddy.js', [], null, true);
+  wp_add_inline_script('feddy', "Feddy.init({ projectId: 'fd_XXXXXXXXXXXXXXXX' })");
+});
+```
+
+`true` puts the script in the footer; `null` as the version keeps WordPress from appending a cache-busting query string, so the file is cached the way the server intends.
+
+<Callout>
+The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+</Callout>
+</Step>
+<Step>
+## Choose an entry point
+
+The floating launcher appears bottom-right on every page. To open the panel from a menu item or button instead, pass `launcher: false` to `init` and add a click handler that calls `Feddy.open()`.
+</Step>
+<Step>
+## Verify
+
+Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
+</Step>
+</Steps>
+
+## Next steps
+
+- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/docs/guides/unread-badge/) to drive your own badge from `onUnreadCountChanged`.
+- [Web SDK reference](/docs/reference/web/) for every option and call.
