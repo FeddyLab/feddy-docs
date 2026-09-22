@@ -29,12 +29,22 @@
             "pages": [
               "introduction",
               "getting-started/create-a-project",
-              "getting-started/ai-agent",
+              "getting-started/ai-agent"
+            ]
+          },
+          {
+            "group": "Quickstart",
+            "pages": [
               {
-                "group": "Quickstart",
+                "group": "iOS",
                 "pages": [
                   "quickstart/swiftui",
-                  "quickstart/uikit",
+                  "quickstart/uikit"
+                ]
+              },
+              {
+                "group": "Web",
+                "pages": [
                   "quickstart/javascript",
                   "quickstart/react",
                   "quickstart/vue",
