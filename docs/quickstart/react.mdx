@@ -7,16 +7,15 @@ By the end of this page your app has a support button, and a message sent from i
 
 ## Prerequisites
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/docs/getting-started/create-a-project/) if you have none.
+- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
 - Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
 
 <Steps>
-<Step>
-## Add a component
+<Step title="Add a component">
 
 Load the script once when the component mounts, then initialize with the launcher off so your own button is the entry point:
 
-```jsx title="Support.jsx"
+```jsx Support.jsx
 import { useEffect } from 'react'
 
 export function Support() {
@@ -32,17 +31,15 @@ export function Support() {
 
 `init` runs once per page; if the effect runs twice in development, the second call is ignored. Leave out `launcher: false` to get the floating launcher instead of your own button.
 
-<Callout>
+<Note>
 The project ID ships in your bundle and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
-</Callout>
+</Note>
 </Step>
-<Step>
-## Render it
+<Step title="Render it">
 
 Render `<Support />` once, somewhere that stays mounted, such as your app shell or settings page.
 </Step>
-<Step>
-## Verify
+<Step title="Verify">
 
 Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
 </Step>
@@ -50,6 +47,6 @@ Open the page, click the control, and send a message. It appears in your Feddy i
 
 ## Next steps
 
-- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/docs/guides/unread-badge/) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/docs/reference/web/) for every option and call.
+- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
+- [Web SDK reference](/reference/web) for every option and call.

@@ -7,23 +7,21 @@ By the end of this page your site has a support launcher, and a message sent fro
 
 ## Prerequisites
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/docs/getting-started/create-a-project/) if you have none.
+- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
 - A page you can edit. There is no build step and nothing to install from npm.
 
 <Steps>
-<Step>
-## Install
+<Step title="Install">
 
 Load the widget before the closing `</body>` tag:
 
-```html title="index.html"
+```html index.html
 <script src="https://core.feddy.app/sdk/feddy.js"></script>
 ```
 
 The file is a single self-contained script with no dependencies. It renders inside a shadow root, so your CSS and the widget's never touch.
 </Step>
-<Step>
-## Initialize
+<Step title="Initialize">
 
 ```html
 <script>
@@ -33,12 +31,11 @@ The file is a single self-contained script with no dependencies. It renders insi
 
 `init` runs once per page; later calls are ignored. If the script loads before the DOM is ready, the widget mounts on `DOMContentLoaded`.
 
-<Callout>
+<Note>
 The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
-</Callout>
+</Note>
 </Step>
-<Step>
-## Choose an entry point
+<Step title="Choose an entry point">
 
 By default a launcher appears bottom-right. If your site already has a **Support** or **Feedback** control, turn the launcher off and open the panel from your own element:
 
@@ -49,8 +46,7 @@ By default a launcher appears bottom-right. If your site already has a **Support
 </script>
 ```
 </Step>
-<Step>
-## Verify
+<Step title="Verify">
 
 Open the page, click the launcher, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel, and the launcher shows an unread count until the visitor reads it.
 </Step>
@@ -58,6 +54,6 @@ Open the page, click the launcher, and send a message. It appears in your Feddy 
 
 ## Next steps
 
-- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/docs/guides/unread-badge/) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/docs/reference/web/) for every option and call.
+- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
+- [Web SDK reference](/reference/web) for every option and call.

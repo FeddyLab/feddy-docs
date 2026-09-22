@@ -7,16 +7,15 @@ By the end of this page your site has a support launcher, and a message sent fro
 
 ## Prerequisites
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/docs/getting-started/create-a-project/) if you have none.
+- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
 - Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
 
 <Steps>
-<Step>
-## Add a client component
+<Step title="Add a client component">
 
 `next/script` needs a client component for its `onLoad` callback:
 
-```tsx title="app/support.tsx"
+```tsx app/support.tsx
 'use client'
 import Script from 'next/script'
 
@@ -31,14 +30,13 @@ export function Support() {
 }
 ```
 
-<Callout>
+<Note>
 The project ID ships in your bundle and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
-</Callout>
+</Note>
 </Step>
-<Step>
-## Render it from the root layout
+<Step title="Render it from the root layout">
 
-```tsx title="app/layout.tsx"
+```tsx app/layout.tsx
 import { Support } from './support'
 
 export default function RootLayout({ children }) {
@@ -55,8 +53,7 @@ export default function RootLayout({ children }) {
 
 The widget mounts once and survives client-side navigation. To open it from your own button instead of the floating launcher, pass `launcher: false` to `init` and call `Feddy.open()` from the button.
 </Step>
-<Step>
-## Verify
+<Step title="Verify">
 
 Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
 </Step>
@@ -64,6 +61,6 @@ Open the page, click the control, and send a message. It appears in your Feddy i
 
 ## Next steps
 
-- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/docs/guides/unread-badge/) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/docs/reference/web/) for every option and call.
+- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
+- [Web SDK reference](/reference/web) for every option and call.

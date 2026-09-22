@@ -7,12 +7,11 @@ By the end of this page your app has a support entry point, and a message sent f
 
 ## Prerequisites
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/docs/getting-started/create-a-project/) if you have none.
+- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
 - Xcode 15 or later. The SDK targets iOS 15 and has no third-party dependencies.
 
 <Steps>
-<Step>
-## Install
+<Step title="Install">
 
 In Xcode choose **File → Add Package Dependencies…** and paste:
 
@@ -26,12 +25,11 @@ Or add it to `Package.swift`:
 .package(url: "https://github.com/FeddyLab/feddy-ios", from: "0.7.0")
 ```
 </Step>
-<Step>
-## Initialize
+<Step title="Initialize">
 
 Call `configure` once, before any other Feddy call. Later calls are ignored.
 
-```swift title="App.swift"
+```swift App.swift
 import Feddy
 
 @main
@@ -43,12 +41,11 @@ struct MyApp: App {
 }
 ```
 
-<Callout>
+<Note>
 The project ID ships inside your binary and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
-</Callout>
+</Note>
 </Step>
-<Step>
-## Add an entry point
+<Step title="Add an entry point">
 
 Put a row where users already look for help, usually in Settings:
 
@@ -61,8 +58,7 @@ Form {
 
 `present()` opens the conversation list as a sheet over whatever is on screen. `presentNewConversation()` skips the list and opens the compose form.
 </Step>
-<Step>
-## Verify
+<Step title="Verify">
 
 Run the app, open the row, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the sheet and the row's badge shows `1` until the user reads it.
 </Step>
@@ -70,6 +66,6 @@ Run the app, open the row, and send a message. It appears in your Feddy inbox. R
 
 ## Next steps
 
-- [Identify users](/docs/guides/identify-users/) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/docs/guides/unread-badge/) for a custom row or a tab bar item.
-- [iOS SDK reference](/docs/reference/ios/) for every public call.
+- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
+- [Unread badge](/guides/unread-badge) for a custom row or a tab bar item.
+- [iOS SDK reference](/reference/ios) for every public call.

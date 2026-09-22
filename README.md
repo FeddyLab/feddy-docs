@@ -16,6 +16,6 @@ Source for the developer documentation published at https://feddy.app/docs.
 - `docs/reference` — the full public API of each SDK
 - `docs/troubleshooting.mdx`
 
-Pages are MDX rendered with Fumadocs; `meta.json` files set the sidebar order.
+Pages are MDX published with Mintlify; `docs/docs.json` sets the navigation, and the site is served at `feddy.app/docs`.
 
 Fixes and clarifications are welcome as pull requests.

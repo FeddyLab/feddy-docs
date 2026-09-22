@@ -1,0 +1,97 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Feddy",
+  "description": "In-app customer support for iOS apps and websites.",
+  "colors": {
+    "primary": "#121212",
+    "light": "#f7f6f3",
+    "dark": "#121212"
+  },
+  "background": {
+    "color": {
+      "light": "#f7f6f3"
+    }
+  },
+  "logo": {
+    "light": "/logo/lockup.svg",
+    "dark": "/logo/lockup-dark.svg",
+    "href": "https://feddy.app"
+  },
+  "favicon": "/favicon.svg",
+  "appearance": {
+    "default": "light",
+    "strict": true
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get started",
+        "pages": [
+          "index",
+          "getting-started/create-a-project",
+          "getting-started/ai-agent",
+          {
+            "group": "Quickstart",
+            "pages": [
+              "quickstart/swiftui",
+              "quickstart/uikit",
+              "quickstart/javascript",
+              "quickstart/react",
+              "quickstart/vue",
+              "quickstart/svelte",
+              "quickstart/nextjs",
+              "quickstart/astro",
+              "quickstart/wordpress",
+              "quickstart/webflow"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Learn",
+        "pages": [
+          "concepts/projects",
+          "concepts/conversations",
+          "concepts/contacts",
+          "concepts/assistant",
+          "concepts/team"
+        ]
+      },
+      {
+        "group": "Guides",
+        "pages": ["guides/identify-users", "guides/unread-badge"]
+      },
+      {
+        "group": "Reference",
+        "pages": ["reference/ios", "reference/web", "troubleshooting"]
+      }
+    ]
+  },
+  "navbar": {
+    "links": [
+      { "label": "Pricing", "href": "https://feddy.app/pricing/" },
+      { "type": "github", "href": "https://github.com/FeddyLab" }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Sign in",
+      "href": "https://dash.feddy.app/login"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/FeddyLab"
+    }
+  },
+  "seo": {
+    "metatags": {
+      "canonical": "https://feddy.app/docs"
+    },
+    "trailingSlash": true
+  },
+  "redirects": [
+    { "source": "/quickstart/ios", "destination": "/quickstart/swiftui" },
+    { "source": "/quickstart/web", "destination": "/quickstart/javascript" }
+  ]
+}

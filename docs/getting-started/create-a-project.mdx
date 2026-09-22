@@ -6,26 +6,23 @@ description: One project per app or website, and where to find its public projec
 Everything the SDK sends is tied to a project. Create one before you install anything.
 
 <Steps>
-<Step>
-## Sign up
+<Step title="Sign up">
 
 Create an account at [dash.feddy.app](https://dash.feddy.app/signup). The free plan has no time limit and is enough to finish every page in these docs.
 </Step>
-<Step>
-## Create the project
+<Step title="Create the project">
 
 A project is one app or website and everything that comes from it: conversations, contacts, topics, answers, and settings. Create one per product. An iOS app and its website can share a project if the same people answer both; use two if you want separate inboxes.
 </Step>
-<Step>
-## Copy the project ID
+<Step title="Copy the project ID">
 
 Open **Settings → Install**. The project ID looks like `fd_` followed by 16 characters. Every quickstart asks for it.
 </Step>
 </Steps>
 
-<Callout>
+<Note>
 The project ID is public by design. It ships inside your binary and in your page source, so anyone can read it. Commit it, hard-code it, put it in a public repository. There is no way to rotate it and no need to; abuse is handled by rate limits on the server.
-</Callout>
+</Note>
 
 ## Development and production
 
@@ -33,5 +30,5 @@ Use one project for both. The SDK's `apiUrl` option exists so you can point a de
 
 ## Next steps
 
-- Pick a platform on the [documentation home](/docs/) and follow its quickstart.
-- Read [Projects](/docs/concepts/projects/) for everything a project owns.
+- Pick a platform on the [documentation home](/) and follow its quickstart.
+- Read [Projects](/concepts/projects) for everything a project owns.
