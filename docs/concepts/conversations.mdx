@@ -1,50 +1,88 @@
 ---
 title: Conversations
-description: How a message from a user becomes a conversation, what its status means, and what travels with it.
+description: What a thread between you and a user contains, what its status means, and what happens on its own.
 ---
 
-A conversation starts when a user sends a message from the SDK. It carries the message, the topic they picked, and what the SDK knows about their device. Everything that follows, replies, notes, status changes, is appended to it in order.
+A conversation is one thread between you and one user. It starts the moment a user sends a message and holds everything that follows: their messages, your replies, notes your team leaves for each other, and every change of status, in the order they happened.
+
+Each conversation comes with context you didn't have to ask for: the topic the user picked, what device and app version they're on, and anything you've told Feddy about them. You'll find all of it in the panel next to the thread.
+
+From the inbox you can:
+
+- Reply to the user, or leave a note only your team can see.
+- Change the status, or let Feddy change it for you as the conversation moves along.
+- See the user's device, app version, and details, without asking them.
+- Insert a saved reply by typing `/`.
+- Mark a conversation unread so a teammate takes a look.
 
 ## Status
 
-| Status | Meaning |
+A conversation is always in one of three states. Think of it as "whose turn is it?"
+
+| Status | What it means |
 | --- | --- |
-| Open | The user is waiting on you. New conversations start here, and a user reply on a pending conversation returns it here. |
-| Pending | You are waiting on the user. Sending a reply moves the conversation here automatically. |
-| Closed | Done. Closed conversations are never unread. |
+| Open | It's your turn. New conversations start here, and a user replying to something you sent brings it back here. |
+| Pending | It's the user's turn. Sending a reply moves the conversation here on its own. |
+| Closed | Done. Closed conversations never show as unread. |
 
-You can set any status from the conversation header. Two things happen without you:
+You can set any status yourself from the conversation header. Two things also happen without you:
 
-- A conversation that stays pending for 14 days is closed automatically.
-- A user who answers "Was this helpful?" with yes after an assistant reply closes the conversation themselves.
+- A conversation that sits in **Pending** for 14 days closes on its own. The user never answered, so there's nothing left to do.
+- When a user answers "Was this helpful?" with yes after an assistant reply, the conversation closes as resolved.
 
-If a user writes again within 7 days of a close, the conversation reopens. After 7 days their message starts a new conversation, linked to the old one.
+If a user writes again within 7 days of a close, the same conversation reopens. After 7 days their message starts a fresh conversation, with a link back to the old one so you still have the history.
 
 ## Topics
 
-Users pick a topic when they start a conversation. Four are built in: **Bug**, **Feature request**, **Question**, and **Other**. The SDK shows them in the user's language. You can switch any of them off in **Settings → Topics** but cannot rename or delete them.
+When a user starts a conversation, they pick what it's about. This sorts your inbox before you've read a word.
 
-Add your own topics for anything specific to your product, such as "Billing" or "Sync". A custom topic has a name, translations, and a code the SDK sends. The code cannot be changed once created.
+Four topics are built in: **Bug**, **Feature request**, **Question**, and **Other**. Users see them in their own language. You can turn any of them off in **Settings → Topics**, but you can't rename or delete them.
 
-## What travels with a conversation
+Add your own for anything specific to your product, such as **Billing** or **Sync**. A custom topic has a name, translations for other languages, and a short code the SDK uses to refer to it. The code can't be changed once the topic exists, so pick it with care.
 
-The SDK attaches what it can see, and the inbox shows it beside the thread:
+## What comes with each conversation
 
-- iOS: device model, OS version, app version and build, locale.
-- Web: page URL, browser, OS, viewport, referrer, locale.
+The SDK sends along what it can see about the user's setup, and the inbox shows it beside the thread:
 
-Anything you send with `identify` appears as well. See [Contacts](/concepts/contacts).
+- **iOS**: device model, iOS version, app version and build, and the device language.
+- **Web**: the page they were on, browser, operating system, window size, where they came from, and the browser language.
+
+If you've told Feddy who the user is, their name and details appear here too. See [Contacts](/concepts/contacts).
 
 ## Replies and notes
 
-The reply box has two modes. **Reply** goes to the user and moves the conversation to pending. **Note** stays in the inbox for your team and changes nothing the user sees.
+The box at the bottom of a conversation has two modes:
 
-Type `/` in the reply box to insert a saved reply.
+- **Reply** goes to the user. Sending one moves the conversation to **Pending**.
+- **Note** stays inside your inbox. Use it to leave context for a teammate. The user never sees notes and nothing about the conversation changes.
+
+<Tip>
+Type `/` in the reply box to insert a saved reply. Set them up under **Settings → Saved replies**.
+</Tip>
 
 ## Attachments
 
-Users can attach up to 5 images per message, PNG, JPEG, or WebP, up to 10 MB each before the SDK resizes them. Other file types are not accepted. Attachments are available on paid plans.
+Users can attach up to 5 images to a message: PNG, JPEG, or WebP, up to 10 MB each. The SDK shrinks large images before uploading, so a photo from a phone camera is fine. Other kinds of files aren't accepted.
+
+Attachments are available on paid plans.
 
 ## Unread
 
-A conversation is unread when nobody on your team has seen its latest message. Opening it marks it read for everyone. Use **Mark unread** in the header to bring it back. Closed conversations never count as unread.
+A conversation is unread when nobody on your team has seen its latest message yet. Opening it marks it read for everyone. If you want it to stand out again, use **Mark unread** in the header. Closed conversations never count as unread.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Contacts" href="/concepts/contacts">
+    Who's on the other end of a conversation, and what you know about them.
+  </Card>
+  <Card title="Assistant" href="/concepts/assistant">
+    Answer repeat questions automatically, from answers you approved.
+  </Card>
+  <Card title="Team" href="/concepts/team">
+    Get notified about new messages and send replies by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show users a count when a reply is waiting for them.
+  </Card>
+</CardGroup>

@@ -3,79 +3,104 @@ title: Introduction
 description: In-app support for iOS apps and websites. Users write in from inside your product; replies land back where they asked.
 ---
 
-Feddy gives the people using your app or website a place to write in, and gives you one inbox to answer from. Replies show up inside the product, and by email when you have set up a sending domain. An assistant answers repeat questions from answers you approved, and hands everything else to you.
+Feddy is in-app support for iOS apps and websites. Your users write to you from inside the product, without leaving for a website or looking up an email address. Everything they send lands in one inbox. When you reply, the answer shows up right where they asked, and by email too once you've connected your own email domain.
+
+Here's how it works:
+
+1. **A user writes in.** They tap Support in your app, or the chat button on your site, and send a message.
+2. **You see it in your inbox.** The message arrives with the user's device details and anything you've told Feddy about them, so you can answer without asking follow-up questions.
+3. **Your reply reaches them.** It appears in the app or on the site, with a badge so they notice it. If you've connected an email domain, they get it by email as well.
+
+An assistant can handle the questions you've already answered once. It only ever uses answers you wrote or approved, and passes everything else to you.
 
 ## Before you start
 
+You'll need a Feddy project and its project ID. Both take a minute, and the free plan covers everything in these docs.
+
 <CardGroup cols={2}>
   <Card title="Create a project" href="/getting-started/create-a-project">
-    One project per app or website, and where to find its public project ID.
+    Sign up, create a project for your app or site, and copy its project ID.
   </Card>
   <Card title="Set up with an AI agent" href="/getting-started/ai-agent">
-    Hand the install to Claude Code, Cursor, or any agent that reads these docs.
+    Prefer to let Claude Code, Cursor, or another coding agent do the install? Start here.
   </Card>
 </CardGroup>
 
 ## Add Feddy to your product
 
-Pick your platform. Each page takes about five minutes and ends with a message in your inbox.
+Pick your platform. Each page takes about five minutes and ends with a real message in your inbox.
 
 <CardGroup cols={2}>
   <Card title="SwiftUI" href="/quickstart/swiftui">
-    Swift Package, iOS 15 and later, no dependencies.
+    Add the Swift package and a Support row. iOS 15 and later, no other dependencies.
   </Card>
   <Card title="UIKit" href="/quickstart/uikit">
-    The same package from an app delegate and view controllers.
+    The same package, set up from your app delegate and opened from a view controller.
   </Card>
   <Card title="JavaScript" href="/quickstart/javascript">
-    One script tag on any page, no build step.
+    One script tag on any page. Nothing to install or build.
   </Card>
   <Card title="React" href="/quickstart/react">
-    Load the widget from a component and open it from your own button.
+    A small component that loads the widget and opens it from your own button.
   </Card>
   <Card title="Vue" href="/quickstart/vue">
-    Mount the widget in onMounted and wire a button.
+    Load the widget when your component mounts and open it from a button.
   </Card>
   <Card title="Svelte" href="/quickstart/svelte">
-    Mount the widget in onMount and wire a button.
+    Load the widget when your component mounts and open it from a button.
   </Card>
   <Card title="Next.js" href="/quickstart/nextjs">
-    next/script in a client component, rendered from the root layout.
+    Add it once in your root layout and it follows the user across pages.
   </Card>
   <Card title="Astro" href="/quickstart/astro">
-    Two inline scripts in your layout.
+    Two lines in the layout every page shares.
   </Card>
   <Card title="WordPress" href="/quickstart/wordpress">
-    Enqueue the script from your theme or a small plugin.
+    A few lines in your theme, or a small plugin if you'd rather not edit the theme.
   </Card>
   <Card title="Webflow" href="/quickstart/webflow">
-    Paste into Site settings, Custom code.
+    Paste two lines into Site settings and publish.
   </Card>
 </CardGroup>
 
 ## Learn how it works
 
+Once messages are coming in, these pages explain what you're looking at in the dashboard and what you can do with it.
+
 <CardGroup cols={2}>
   <Card title="Projects" href="/concepts/projects">
-    One project per app or site, and the public project ID.
+    What a project holds, and why its ID is safe to share.
   </Card>
   <Card title="Conversations" href="/concepts/conversations">
-    Statuses, topics, notes, and attachments.
+    What a thread contains, what its status means, and what happens on its own.
   </Card>
   <Card title="Contacts" href="/concepts/contacts">
-    Anonymous and identified users, and what you know about them.
+    Who's writing in, from an anonymous visitor to a user you've identified.
   </Card>
   <Card title="Assistant" href="/concepts/assistant">
-    Keyword answers, AI answers, and the Copilot in your inbox.
+    Automatic answers to repeat questions, and a Copilot that drafts replies for you.
   </Card>
   <Card title="Team" href="/concepts/team">
-    Members, notifications, and replying by email.
+    Inviting teammates, getting notified, and sending replies by email.
   </Card>
 </CardGroup>
 
 ## Go further
 
-- [Identify users](/guides/identify-users) so you know who wrote in and replies can reach them by email.
-- [Unread badge](/guides/unread-badge) on the row that opens Feddy, or anywhere else.
-- [iOS SDK reference](/reference/ios) and [Web SDK reference](/reference/web) for every call and option.
-- [Troubleshooting](/troubleshooting) when something does not behave as expected.
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show a count on your Support button so users notice when you've answered.
+  </Card>
+  <Card title="iOS SDK reference" href="/reference/ios">
+    Every call in the Swift package, with its signature and what it does.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    Every option and call in the web widget.
+  </Card>
+  <Card title="Troubleshooting" href="/troubleshooting">
+    What to check when something doesn't behave as expected.
+  </Card>
+</CardGroup>
