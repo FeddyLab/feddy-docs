@@ -116,6 +116,10 @@
   },
   "redirects": [
     {
+      "source": "/",
+      "destination": "/introduction"
+    },
+    {
       "source": "/index",
       "destination": "/introduction"
     },
