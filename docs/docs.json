@@ -38,21 +38,21 @@
               {
                 "group": "iOS",
                 "pages": [
-                  "quickstart/swiftui",
-                  "quickstart/uikit"
+                  "quickstart/ios/swiftui",
+                  "quickstart/ios/uikit"
                 ]
               },
               {
                 "group": "Web",
                 "pages": [
-                  "quickstart/javascript",
-                  "quickstart/react",
-                  "quickstart/vue",
-                  "quickstart/svelte",
-                  "quickstart/nextjs",
-                  "quickstart/astro",
-                  "quickstart/wordpress",
-                  "quickstart/webflow"
+                  "quickstart/web/javascript",
+                  "quickstart/web/react",
+                  "quickstart/web/vue",
+                  "quickstart/web/svelte",
+                  "quickstart/web/nextjs",
+                  "quickstart/web/astro",
+                  "quickstart/web/wordpress",
+                  "quickstart/web/webflow"
                 ]
               }
             ]
@@ -135,11 +135,51 @@
     },
     {
       "source": "/quickstart/ios",
-      "destination": "/quickstart/swiftui"
+      "destination": "/quickstart/ios/swiftui"
     },
     {
       "source": "/quickstart/web",
-      "destination": "/quickstart/javascript"
+      "destination": "/quickstart/web/javascript"
+    },
+    {
+      "source": "/quickstart/swiftui",
+      "destination": "/quickstart/ios/swiftui"
+    },
+    {
+      "source": "/quickstart/uikit",
+      "destination": "/quickstart/ios/uikit"
+    },
+    {
+      "source": "/quickstart/javascript",
+      "destination": "/quickstart/web/javascript"
+    },
+    {
+      "source": "/quickstart/react",
+      "destination": "/quickstart/web/react"
+    },
+    {
+      "source": "/quickstart/vue",
+      "destination": "/quickstart/web/vue"
+    },
+    {
+      "source": "/quickstart/svelte",
+      "destination": "/quickstart/web/svelte"
+    },
+    {
+      "source": "/quickstart/nextjs",
+      "destination": "/quickstart/web/nextjs"
+    },
+    {
+      "source": "/quickstart/astro",
+      "destination": "/quickstart/web/astro"
+    },
+    {
+      "source": "/quickstart/wordpress",
+      "destination": "/quickstart/web/wordpress"
+    },
+    {
+      "source": "/quickstart/webflow",
+      "destination": "/quickstart/web/webflow"
     }
   ],
   "contextual": {
