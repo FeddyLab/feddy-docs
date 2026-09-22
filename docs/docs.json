@@ -5,13 +5,8 @@
   "description": "In-app customer support for iOS apps and websites.",
   "colors": {
     "primary": "#121212",
-    "light": "#f7f6f3",
+    "light": "#121212",
     "dark": "#121212"
-  },
-  "background": {
-    "color": {
-      "light": "#f7f6f3"
-    }
   },
   "logo": {
     "light": "/logo/lockup.svg",
