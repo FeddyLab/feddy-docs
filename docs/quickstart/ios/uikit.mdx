@@ -3,31 +3,31 @@ title: UIKit
 description: Add Feddy to a UIKit app with Swift Package Manager and send your first message.
 ---
 
-By the end of this page your app has a support entry point, and a message sent from it shows up in your Feddy inbox.
+By the end of this page your app will have a Support button that opens Feddy, and a message sent from it will be sitting in your inbox. It takes about five minutes.
 
-## Prerequisites
+## Before you start
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
-- Xcode 15 or later. The SDK targets iOS 15 and has no third-party dependencies.
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- Xcode 15 or later. The SDK supports iOS 15 and up and doesn't pull in any other packages.
 
 <Steps>
-<Step title="Install">
+<Step title="Add the package">
 
-In Xcode choose **File → Add Package Dependencies…** and paste:
+In Xcode, choose **File → Add Package Dependencies…** and paste this URL:
 
 ```
 https://github.com/FeddyLab/feddy-ios
 ```
 
-Or add it to `Package.swift`:
+If you manage dependencies in a `Package.swift` file instead, add:
 
 ```swift
 .package(url: "https://github.com/FeddyLab/feddy-ios", from: "0.7.0")
 ```
 </Step>
-<Step title="Initialize">
+<Step title="Tell Feddy which project this is">
 
-Call `configure` once, before any other Feddy call. Later calls are ignored.
+Do this once, when the app launches, before anything else can open Feddy. Calling it again later does nothing.
 
 ```swift AppDelegate.swift
 import Feddy
@@ -40,12 +40,12 @@ func application(_ application: UIApplication,
 ```
 
 <Note>
-The project ID ships inside your binary and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+**The project ID isn't a secret.** It's built into your app, so anyone who downloads the app can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it to your repository like any other setting. There's nothing to protect, so keep it out of your secrets file.
 </Note>
 </Step>
-<Step title="Add an entry point">
+<Step title="Give users a way in">
 
-Call `present()` from wherever users look for help, usually a row in Settings or a bar button item. It presents the conversation list as a sheet over the current view controller.
+Call `present()` from wherever users go looking for help. For most apps that's a row in Settings or a bar button. Feddy slides up over the current screen, showing the user's past conversations and a button to start a new one.
 
 ```swift SettingsViewController.swift
 @objc func helpTapped() {
@@ -53,7 +53,7 @@ Call `present()` from wherever users look for help, usually a row in Settings or
 }
 ```
 
-To show unread replies on the control, assign `onUnreadCountChanged`. It is called on the main thread whenever the count changes:
+To show a count on that button when a reply is waiting, give Feddy a function to call whenever the number changes. It runs on the main thread, so you can update the UI directly:
 
 ```swift
 Feddy.onUnreadCountChanged = { count in
@@ -61,14 +61,31 @@ Feddy.onUnreadCountChanged = { count in
 }
 ```
 </Step>
-<Step title="Verify">
+<Step title="Send yourself a message">
 
-Run the app, tap the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the sheet and the badge shows `1` until the user reads it.
+Run the app, tap the button, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the device model and app version alongside.
+
+Reply from the inbox. Back in the app, the reply appears in the conversation, and the button shows a `1` until the user opens it.
+
+<Check>
+That's the whole loop: a user writes in, you answer, and the answer reaches them inside the app.
+</Check>
 </Step>
 </Steps>
 
 ## Next steps
 
-- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/guides/unread-badge) for refreshing on foreground and other placements.
-- [iOS SDK reference](/reference/ios) for every public call.
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Keep the count fresh when the app comes back to the foreground, and other placements.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="iOS SDK reference" href="/reference/ios">
+    Every call in the package, with its signature and what it does.
+  </Card>
+</CardGroup>

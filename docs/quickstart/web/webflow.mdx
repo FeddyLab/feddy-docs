@@ -3,17 +3,17 @@ title: Webflow
 description: Add the Feddy widget to a Webflow site by pasting two lines into Custom code.
 ---
 
-By the end of this page your site has a support launcher, and a message sent from it shows up in your Feddy inbox.
+By the end of this page your site will have a chat button that opens Feddy on every page, and a message sent from it will be sitting in your inbox. It takes about five minutes and no code beyond what you paste.
 
-## Prerequisites
+## Before you start
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
-- Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- A Webflow site you can publish.
 
 <Steps>
 <Step title="Paste into Custom code">
 
-In Webflow open **Site settings → Custom code** and paste into **Footer code**:
+In Webflow, open **Site settings → Custom code** and paste this into **Footer code**:
 
 ```html Site settings → Custom code → Footer code
 <script src="https://core.feddy.app/sdk/feddy.js"></script>
@@ -22,24 +22,43 @@ In Webflow open **Site settings → Custom code** and paste into **Footer code**
 </script>
 ```
 
-Publish the site. Custom code is not applied in the Designer preview.
+Then publish the site. Custom code doesn't run in the Designer preview, so you'll only see the widget on the published site.
 
 <Note>
-The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+**The project ID isn't a secret.** It's visible in your page source, so anyone can find it, and that's fine: it only tells Feddy which inbox a message belongs to. There's nothing to protect.
 </Note>
 </Step>
-<Step title="Choose an entry point">
+<Step title="Choose how users open it">
 
-The floating launcher appears bottom-right on every page. To open the panel from a button you designed, give the button an ID such as `help`, pass `launcher: false` to `init`, and add one line after it: `document.querySelector('#help').addEventListener('click', () => Feddy.open())`.
+By default, a floating chat button appears in the bottom-right corner of every page.
+
+If you'd rather use a button you designed, give it an ID such as `help` in the Designer, add `launcher: false` to the `init` call, and add this line after it: `document.querySelector('#help').addEventListener('click', () => Feddy.open())`.
 </Step>
-<Step title="Verify">
+<Step title="Send yourself a message">
 
-Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
+Open the published site, click the button, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the page URL and browser alongside.
+
+Reply from the inbox. Back on the site, the reply appears in the panel.
+
+<Check>
+That's the whole loop: a visitor writes in, you answer, and the answer reaches them on your site.
+</Check>
 </Step>
 </Steps>
 
 ## Next steps
 
-- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/reference/web) for every option and call.
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show the count on your own element when you've turned the floating button off.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    Every option and call in the widget.
+  </Card>
+</CardGroup>

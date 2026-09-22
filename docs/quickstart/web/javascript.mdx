@@ -3,25 +3,25 @@ title: JavaScript
 description: Add the Feddy widget to any page with one script tag and send your first message.
 ---
 
-By the end of this page your site has a support launcher, and a message sent from it shows up in your Feddy inbox.
+By the end of this page your site will have a chat button that opens Feddy, and a message sent from it will be sitting in your inbox. It takes about five minutes.
 
-## Prerequisites
+## Before you start
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
-- A page you can edit. There is no build step and nothing to install from npm.
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- A page you can edit. There's nothing to install and no build step; the widget is one script loaded from Feddy's servers.
 
 <Steps>
-<Step title="Install">
+<Step title="Add the script">
 
-Load the widget before the closing `</body>` tag:
+Put this just before the closing `</body>` tag:
 
 ```html index.html
 <script src="https://core.feddy.app/sdk/feddy.js"></script>
 ```
 
-The file is a single self-contained script with no dependencies. It renders inside a shadow root, so your CSS and the widget's never touch.
+It's a single file with no dependencies. The widget keeps its own styles, so it never clashes with your page's CSS, and your CSS never leaks into it.
 </Step>
-<Step title="Initialize">
+<Step title="Tell Feddy which project this is">
 
 ```html
 <script>
@@ -29,15 +29,17 @@ The file is a single self-contained script with no dependencies. It renders insi
 </script>
 ```
 
-`init` runs once per page; later calls are ignored. If the script loads before the DOM is ready, the widget mounts on `DOMContentLoaded`.
+This runs once per page load; calling it again does nothing. If the script runs before the page has finished loading, the widget waits and appears when it's ready.
 
 <Note>
-The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+**The project ID isn't a secret.** It's visible in your page source, so anyone can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it like any other setting. There's nothing to protect, so keep it out of your secrets file.
 </Note>
 </Step>
-<Step title="Choose an entry point">
+<Step title="Choose how users open it">
 
-By default a launcher appears bottom-right. If your site already has a **Support** or **Feedback** control, turn the launcher off and open the panel from your own element:
+By default, a floating chat button appears in the bottom-right corner of the page. That's all most sites need.
+
+If your site already has a **Support** or **Feedback** link, you can turn the floating button off and open Feddy from your own element instead:
 
 ```html
 <script>
@@ -46,14 +48,31 @@ By default a launcher appears bottom-right. If your site already has a **Support
 </script>
 ```
 </Step>
-<Step title="Verify">
+<Step title="Send yourself a message">
 
-Open the page, click the launcher, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel, and the launcher shows an unread count until the visitor reads it.
+Open the page, click the button, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the page URL and browser alongside.
+
+Reply from the inbox. Back on the page, the reply appears in the panel, and the floating button shows a count until the visitor opens it.
+
+<Check>
+That's the whole loop: a visitor writes in, you answer, and the answer reaches them on your site.
+</Check>
 </Step>
 </Steps>
 
 ## Next steps
 
-- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/reference/web) for every option and call.
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show the count on your own element when you've turned the floating button off.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    Every option and call in the widget.
+  </Card>
+</CardGroup>

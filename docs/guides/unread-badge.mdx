@@ -1,15 +1,15 @@
 ---
 title: Unread badge
-description: Show users that a reply is waiting, on the row that opens Feddy or anywhere else.
+description: Show users that a reply is waiting, on the button that opens Feddy or anywhere else in your app.
 ---
 
-By the end of this page the control that opens Feddy shows the number of unread replies and clears when the user reads them.
+By the end of this page, the button that opens Feddy will show how many replies are waiting, and the number will disappear once the user has read them.
 
-The SDK keeps the count current on its own: iOS polls every 30 seconds, the web widget every 45 seconds and whenever the tab becomes visible.
+You don't have to keep the count up to date yourself. The SDK checks for new replies on its own: every 30 seconds on iOS, and every 45 seconds on the web plus whenever the user returns to the tab.
 
 ## iOS
 
-### A row in a `List` or `Form`
+### A row in a List or Form
 
 ```swift
 Form {
@@ -18,11 +18,11 @@ Form {
 }
 ```
 
-This is the badge iOS itself puts on rows in Settings. Nothing is drawn at zero.
+This is the same badge iOS puts on rows in the Settings app. Nothing is drawn when the count is zero.
 
 ### A row that draws its own chevron
 
-A list badge is pinned to the trailing edge and would land outside your chevron. Place the marker yourself:
+A list badge sits at the trailing edge of the row, which would put it outside your chevron. Place the marker yourself instead:
 
 ```swift
 HStack {
@@ -33,11 +33,11 @@ HStack {
 }
 ```
 
-Pass `showsCount: false` for a plain dot.
+Pass `showsCount: false` for a plain dot without the number.
 
 ### A tab bar item or anything custom
 
-Observe the published count:
+Read the count from `FeddyUnread.shared`. It's an observable object, so a SwiftUI view that reads it updates itself whenever the count changes:
 
 ```swift
 struct RootTabs: View {
@@ -53,11 +53,11 @@ struct RootTabs: View {
 }
 ```
 
-UIKit apps assign `Feddy.onUnreadCountChanged` and set `tabBarItem.badgeValue` from it.
+In a UIKit app, assign a function to `Feddy.onUnreadCountChanged` and set `tabBarItem.badgeValue` from it.
 
-### Refresh on foreground
+### Keep it fresh when the app comes back
 
-Polling pauses while the app is suspended. Call `Feddy.refresh()` when the app becomes active so the badge is right before the next poll:
+While the app is in the background, the SDK stops checking. When the user returns, ask for a fresh count right away so the badge is right before the next scheduled check:
 
 ```swift
 .onChange(of: scenePhase) { phase in
@@ -67,9 +67,9 @@ Polling pauses while the app is suspended. Call `Feddy.refresh()` when the app b
 
 ## Web
 
-With the default launcher there is nothing to do; it shows the count itself.
+If you're using the floating chat button, there's nothing to do: it shows the count itself.
 
-With `launcher: false`, feed your own element:
+If you've turned it off with `launcher: false`, give Feddy a function to call whenever the count changes, and update your own element from it:
 
 ```js
 Feddy.init({ projectId: 'fd_XXXXXXXXXXXXXXXX', launcher: false })
@@ -83,4 +83,25 @@ Feddy.onUnreadCountChanged = (count) => {
 
 ## What counts as unread
 
-A reply is unread until the user opens the conversation it belongs to. Closed conversations never count. Opening the list alone does not clear anything.
+A reply is unread until the user opens the conversation it belongs to. Opening the list of conversations isn't enough on its own. Replies in closed conversations never count.
+
+<Check>
+Send a message from a test build, reply from the inbox, and watch the badge show `1`. Open the conversation in the app and it goes away.
+</Check>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Conversations" href="/concepts/conversations">
+    What makes a conversation unread in the inbox, and how to mark one unread again.
+  </Card>
+  <Card title="iOS SDK reference" href="/reference/ios">
+    `feddyUnreadBadge`, `FeddyUnreadDot`, `FeddyUnread`, and `refresh` in full.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    `onUnreadCountChanged` and the `launcher` option in full.
+  </Card>
+  <Card title="Troubleshooting" href="/troubleshooting">
+    What to check when the badge doesn't update.
+  </Card>
+</CardGroup>

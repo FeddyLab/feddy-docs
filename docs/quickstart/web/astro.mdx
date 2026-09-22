@@ -1,19 +1,19 @@
 ---
 title: Astro
-description: Add the Feddy widget to an Astro site with two inline scripts in your layout.
+description: Add the Feddy widget to an Astro site with two lines in the layout every page shares.
 ---
 
-By the end of this page your site has a support launcher, and a message sent from it shows up in your Feddy inbox.
+By the end of this page your site will have a chat button that opens Feddy on every page, and a message sent from it will be sitting in your inbox. It takes about five minutes.
 
-## Prerequisites
+## Before you start
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
-- Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- Nothing to install from npm. The widget is one script loaded from Feddy's servers.
 
 <Steps>
-<Step title="Add the scripts to your layout">
+<Step title="Add two lines to your layout">
 
-Astro bundles and hoists `<script>` tags by default. `is:inline` leaves these two alone so the widget loads exactly as written:
+Astro normally rewrites `<script>` tags as part of its build. `is:inline` tells it to leave these two alone, so the widget loads exactly as written:
 
 ```astro src/layouts/Layout.astro
 <script is:inline src="https://core.feddy.app/sdk/feddy.js"></script>
@@ -22,24 +22,43 @@ Astro bundles and hoists `<script>` tags by default. `is:inline` leaves these tw
 </script>
 ```
 
-Put them before the closing `</body>` tag of the layout every page uses.
+Put them just before the closing `</body>` tag of the layout every page uses.
 
 <Note>
-The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+**The project ID isn't a secret.** It's visible in your page source, so anyone can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it like any other setting. There's nothing to protect, so keep it out of your secrets file.
 </Note>
 </Step>
-<Step title="Choose an entry point">
+<Step title="Choose how users open it">
 
-The floating launcher appears bottom-right. To use your own control instead, pass `launcher: false` to `init` and call `Feddy.open()` from it. With the `<ClientRouter />` view transitions enabled, the widget stays mounted across navigations.
+By default, a floating chat button appears in the bottom-right corner. If you'd rather open Feddy from your own button, pass `launcher: false` to `init` and call `Feddy.open()` when the button is clicked.
+
+If your site uses Astro's `<ClientRouter />` for page transitions, the widget stays in place as users move between pages.
 </Step>
-<Step title="Verify">
+<Step title="Send yourself a message">
 
-Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
+Open the page, click the button, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the page URL and browser alongside.
+
+Reply from the inbox. Back on the page, the reply appears in the panel.
+
+<Check>
+That's the whole loop: a visitor writes in, you answer, and the answer reaches them on your site.
+</Check>
 </Step>
 </Steps>
 
 ## Next steps
 
-- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/reference/web) for every option and call.
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show the count on your own element when you've turned the floating button off.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    Every option and call in the widget.
+  </Card>
+</CardGroup>

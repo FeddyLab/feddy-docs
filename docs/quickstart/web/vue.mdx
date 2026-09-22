@@ -1,19 +1,19 @@
 ---
 title: Vue
-description: Load the Feddy widget in onMounted and open it from your own button.
+description: Load the Feddy widget when your component mounts and open it from your own button.
 ---
 
-By the end of this page your app has a support button, and a message sent from it shows up in your Feddy inbox.
+By the end of this page your app will have a Support button that opens Feddy, and a message sent from it will be sitting in your inbox. It takes about five minutes.
 
-## Prerequisites
+## Before you start
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
-- Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- Nothing to install from npm. The widget is one script loaded from Feddy's servers when your component mounts.
 
 <Steps>
 <Step title="Add a component">
 
-Load the script once when the component mounts, then initialize with the launcher off so your own button is the entry point:
+The component loads the script once, then tells Feddy which project this is. `launcher: false` turns off the floating chat button so your own button is the way in:
 
 ```vue Support.vue
 <script setup>
@@ -32,24 +32,41 @@ const open = () => Feddy.open()
 <template><button @click="open">Support</button></template>
 ```
 
-The template cannot reach the `Feddy` global directly, which is why `open` is declared in the script. Leave out `launcher: false` to get the floating launcher instead of your own button.
+The `open` function lives in the script because a Vue template can't reach the global `Feddy` object directly. Leave out `launcher: false` if you'd rather have the floating button instead of your own.
 
 <Note>
-The project ID ships in your bundle and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+**The project ID isn't a secret.** It's visible in your bundle, so anyone can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it like any other setting. There's nothing to protect, so keep it out of your secrets file.
 </Note>
 </Step>
-<Step title="Render it">
+<Step title="Render it once">
 
-Render `<Support />` once, somewhere that stays mounted, such as your app shell or settings page.
+Put `<Support />` somewhere that stays mounted, such as your app shell or settings page. The widget keeps its own styles, so it never clashes with your CSS.
 </Step>
-<Step title="Verify">
+<Step title="Send yourself a message">
 
-Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
+Open the page, click the button, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the page URL and browser alongside.
+
+Reply from the inbox. Back on the page, the reply appears in the panel.
+
+<Check>
+That's the whole loop: a visitor writes in, you answer, and the answer reaches them on your site.
+</Check>
 </Step>
 </Steps>
 
 ## Next steps
 
-- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/reference/web) for every option and call.
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show a count on your Support button when a reply is waiting.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    Every option and call in the widget.
+  </Card>
+</CardGroup>

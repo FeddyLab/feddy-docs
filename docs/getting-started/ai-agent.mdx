@@ -3,20 +3,39 @@ title: Set up with an AI agent
 description: Hand the install to Claude Code, Cursor, or any coding agent that can read these docs.
 ---
 
-Every install in these docs is a few lines of code in a known place. An agent can do it for you if it knows your project ID and where the docs are.
+Every install in these docs comes down to a few lines of code in a known place. If you work with a coding agent, it can do those steps for you. All it needs is your project ID and a way to read these docs.
 
-## The prompt in your dashboard
+## Copy the prompt from your dashboard
 
-Every project's **Settings → Install** page has a prompt written for coding agents. It contains your project ID and the steps for your platform, so you can paste it into the agent as is. Read what the agent changed before you ship it; the [quickstart](/introduction) for your platform shows what a correct install looks like.
+Every project has a prompt written for coding agents under **Settings → Install**. It already contains your project ID and the steps for your platform, so you can paste it into the agent as is.
 
-## Where agents can read these docs
+When the agent is done, read through what it changed before you ship. The quickstart for your platform shows what a correct install looks like, and the two should match.
 
-- **Context7**: the docs are indexed from the public [FeddyLab/feddy-docs](https://github.com/FeddyLab/feddy-docs) repository. Agents with the Context7 tool can look up `feddy` directly.
-- **llms.txt**: [feddy.app/llms.txt](https://feddy.app/llms.txt) lists every page with a one-line summary; [feddy.app/llms-full.txt](https://feddy.app/llms-full.txt) is the full text of every page in one file.
-- **The SDK sources**: the iOS package at [FeddyLab/feddy-ios](https://github.com/FeddyLab/feddy-ios) is public. Every call the docs mention is in there.
+## How agents can read these docs
+
+- **Context7.** These docs are indexed from the public [FeddyLab/feddy-docs](https://github.com/FeddyLab/feddy-docs) repository. If your agent has the Context7 tool, it can look up `feddy` directly.
+- **llms.txt.** [feddy.app/docs/llms.txt](https://feddy.app/docs/llms.txt) lists every page with a one-line summary, and [feddy.app/docs/llms-full.txt](https://feddy.app/docs/llms-full.txt) is the full text of every page in one file. Paste either link into the agent's context.
+- **The SDK source.** The iOS package at [FeddyLab/feddy-ios](https://github.com/FeddyLab/feddy-ios) is public, so an agent can read the code behind every call these docs mention.
 
 ## What to check afterwards
 
-- `configure` or `init` runs once, with your project ID, before any other Feddy call.
-- The entry point is somewhere users already look for help, usually Settings.
-- A message sent from a debug build shows up in your inbox. Reply to it and the reply shows up in the app.
+Three things tell you the install is right:
+
+- Feddy is set up once, with your project ID, when the app or page starts and before anything else can open it.
+- The Support button is somewhere users already look for help, usually Settings.
+- A message sent from a debug build shows up in your inbox, and your reply from the inbox shows up in the app.
+
+<Check>
+If all three hold, you're done. Everything else, from identifying users to the unread badge, is optional.
+</Check>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show a count on your Support button so users notice when you've answered.
+  </Card>
+</CardGroup>

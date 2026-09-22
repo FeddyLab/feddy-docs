@@ -3,17 +3,17 @@ title: WordPress
 description: Add the Feddy widget to a WordPress site from your theme or a small plugin.
 ---
 
-By the end of this page your site has a support launcher, and a message sent from it shows up in your Feddy inbox.
+By the end of this page your site will have a chat button that opens Feddy on every page, and a message sent from it will be sitting in your inbox. It takes about five minutes.
 
-## Prerequisites
+## Before you start
 
-- A Feddy project and its project ID from **Settings → Install**. [Create a project](/getting-started/create-a-project) if you have none.
-- Nothing to install from npm. The widget is one script served from `core.feddy.app`, loaded at runtime.
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- Access to your theme's files, or the ability to add a plugin. Nothing to install from npm; the widget is one script loaded from Feddy's servers.
 
 <Steps>
-<Step title="Enqueue the script">
+<Step title="Add the script">
 
-Add this to your theme's `functions.php`, or to a plugin file if you would rather not edit the theme:
+Add this to your theme's `functions.php`. If you'd rather not touch the theme, the same lines work in a small plugin file:
 
 ```php functions.php
 add_action('wp_enqueue_scripts', function () {
@@ -22,24 +22,41 @@ add_action('wp_enqueue_scripts', function () {
 });
 ```
 
-`true` puts the script in the footer; `null` as the version keeps WordPress from appending a cache-busting query string, so the file is cached the way the server intends.
+Two details worth knowing: the final `true` places the script at the bottom of the page so it never slows down your content, and `null` as the version stops WordPress from adding its own cache-busting suffix, so browsers cache the file the way Feddy intends.
 
 <Note>
-The project ID ships in your page source and is public by design. Commit it. Do not put it in a secrets file or an environment variable.
+**The project ID isn't a secret.** It's visible in your page source, so anyone can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it like any other setting. There's nothing to protect, so keep it out of your secrets file.
 </Note>
 </Step>
-<Step title="Choose an entry point">
+<Step title="Choose how users open it">
 
-The floating launcher appears bottom-right on every page. To open the panel from a menu item or button instead, pass `launcher: false` to `init` and add a click handler that calls `Feddy.open()`.
+By default, a floating chat button appears in the bottom-right corner of every page. If you'd rather open Feddy from a menu item or button, pass `launcher: false` to `init` and add a click handler that calls `Feddy.open()`.
 </Step>
-<Step title="Verify">
+<Step title="Send yourself a message">
 
-Open the page, click the control, and send a message. It appears in your Feddy inbox. Reply from the inbox; the reply shows up in the panel.
+Open the site, click the button, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the page URL and browser alongside.
+
+Reply from the inbox. Back on the site, the reply appears in the panel.
+
+<Check>
+That's the whole loop: a visitor writes in, you answer, and the answer reaches them on your site.
+</Check>
 </Step>
 </Steps>
 
 ## Next steps
 
-- [Identify users](/guides/identify-users) so replies can also reach them by email and you see who wrote in.
-- [Unread badge](/guides/unread-badge) to drive your own badge from `onUnreadCountChanged`.
-- [Web SDK reference](/reference/web) for every option and call.
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Show the count on your own element when you've turned the floating button off.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    Every option and call in the widget.
+  </Card>
+</CardGroup>

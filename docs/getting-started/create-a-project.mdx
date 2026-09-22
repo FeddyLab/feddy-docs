@@ -1,34 +1,46 @@
 ---
 title: Create a project
-description: One project per app or website, and where to find its public project ID.
+description: Sign up, create a project for your app or site, and copy its project ID.
 ---
 
-Everything the SDK sends is tied to a project. Create one before you install anything.
+Everything in Feddy is organized around projects. A project is the home for one app or website: its conversations, the people who wrote in, its settings, and the inbox your team answers from. You need one before you install anything, and creating it takes about a minute.
 
 <Steps>
 <Step title="Sign up">
 
-Create an account at [dash.feddy.app](https://dash.feddy.app/signup). The free plan has no time limit and is enough to finish every page in these docs.
+Create an account at [dash.feddy.app](https://dash.feddy.app/signup). The free plan doesn't expire and covers everything in these docs.
 </Step>
-<Step title="Create the project">
+<Step title="Create a project">
 
-A project is one app or website and everything that comes from it: conversations, contacts, topics, answers, and settings. Create one per product. An iOS app and its website can share a project if the same people answer both; use two if you want separate inboxes.
+Name it after your app or site. One project per product is the usual setup.
+
+If you have an iOS app and a website for the same product, they can share a project as long as the same people answer both. Prefer two projects when you want separate inboxes.
 </Step>
 <Step title="Copy the project ID">
 
-Open **Settings → Install**. The project ID looks like `fd_` followed by 16 characters. Every quickstart asks for it.
+Open **Settings → Install**. The project ID starts with `fd_` followed by 16 characters. It's the only thing you need from the dashboard to get set up, and every quickstart asks for it.
+
+<Check>
+You have a project and its ID. Pick your platform on the [introduction](/introduction) and follow its quickstart.
+</Check>
 </Step>
 </Steps>
 
 <Note>
-The project ID is public by design. It ships inside your binary and in your page source, so anyone can read it. Commit it, hard-code it, put it in a public repository. There is no way to rotate it and no need to; abuse is handled by rate limits on the server.
+**The project ID isn't a secret.** It's built into your app or visible in your page source, so anyone can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it, hard-code it, put it in a public repository. There's no way to rotate it and no need to. If someone tries to flood your inbox, Feddy limits how many requests one device can send.
 </Note>
 
-## Development and production
+## One project for development and production
 
-Use one project for both. The SDK's `apiUrl` option exists so you can point a development build at a local server; the project ID stays the same. Create a second project only if you want test conversations out of your real inbox.
+You don't need a separate project for testing. The SDK has an `apiUrl` option for pointing a development build at a local server, and the project ID stays the same either way. Create a second project only if you'd rather keep test conversations out of your real inbox.
 
 ## Next steps
 
-- Pick a platform on the [documentation home](/introduction) and follow its quickstart.
-- Read [Projects](/concepts/projects) for everything a project owns.
+<CardGroup cols={2}>
+  <Card title="Add Feddy to your product" href="/introduction">
+    Pick your platform and follow its five-minute quickstart.
+  </Card>
+  <Card title="Projects" href="/concepts/projects">
+    Everything a project holds, and the settings you'll find inside it.
+  </Card>
+</CardGroup>

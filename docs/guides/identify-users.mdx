@@ -1,15 +1,15 @@
 ---
 title: Identify users
-description: Bind conversations to a logged-in user so you know who wrote in and replies can reach them by email.
+description: Tell Feddy who's logged in, so you see their name in the inbox, their history follows them across devices, and replies can reach them by email.
 ---
 
-By the end of this page conversations from a logged-in user show their name and attributes in the inbox, and their history follows them across devices.
+By the end of this page, conversations from a logged-in user will show their name and details in your inbox, and their history will follow them onto every device they sign in on.
 
-Every install works without this step. Until you call `identify`, each device is an anonymous contact whose id lives in the Keychain on iOS and in `localStorage` on the web.
+You don't have to do this. Feddy works from the first install: until you identify someone, each device is treated as its own anonymous visitor, with an ID Feddy stores on the device. Identifying users is what turns "an iPhone running 2.3.1" into "Ada, on the Pro plan".
 
 ## When to call it
 
-Call `identify` right after login, and again whenever an attribute you send changes. Calling it on every launch is fine; it is an upsert.
+Call `identify` right after the user logs in, and again whenever something you send about them changes. It's safe to call as often as you like, even on every launch; each call updates what's stored.
 
 ```swift
 Feddy.identify(
@@ -27,36 +27,59 @@ Feddy.identify({
 })
 ```
 
-## What happens on the server
+`userId` is your own ID for the user, the one your backend uses. Everything else is optional.
 
-- The device's anonymous contact gets your `userId` as its external id, plus the email, name, avatar URL, and attributes you sent.
-- If a contact with the same `userId` already exists, this device's conversations move onto it and the duplicate anonymous contact is deleted. The user sees one history on every device they log in on.
-- Attributes replace the previous set as a whole. Send every attribute you want to keep on each call; a key you leave out is removed. Email, name, and avatar URL are kept when you omit them.
+## What happens when you do
 
-## Attributes
+- The anonymous visitor on this device becomes that user. Their email, name, picture, and details now show in the inbox.
+- If Feddy already knows this `userId` from another device, the two records merge into one. The conversations from this device move over, and the user sees a single history everywhere they log in.
+- The details you send replace the previous set as a whole. Send everything you want to keep on every call; leave a key out and it's removed. Email, name, and picture are the exception: they stay if you don't send them.
 
-Send flat key-value pairs about the user that help you answer faster: plan, membership status, trial end date, account age. Values may be strings, numbers, booleans, or dates as ISO 8601 strings.
+## Details about the user
 
-Anything over the limits below is dropped silently. The request never fails because of attributes, so a mistake in your integration cannot stop a user from writing in.
+Alongside the ID, you can send facts that help you answer faster: their plan, whether they're a paying member, when their trial ends, how long they've had an account. Feddy calls these **attributes**. They're simple key-value pairs; values can be text, numbers, true/false, or dates written like `2026-09-22T10:00:00Z`.
+
+<Note>
+Attributes are for facts about the person. Device model, OS version, app version, and language are collected by the SDK and shown with every conversation already, so there's no need to send those.
+</Note>
+
+There are limits, but hitting one never causes an error. Anything over a limit is quietly dropped, so a mistake in your integration can't stop a user from writing in.
 
 | Limit | Value |
 | --- | --- |
 | Keys per contact | 20 |
 | Key length | 40 characters |
-| Value length | 255 characters after serialization |
+| Value length | 255 characters as text |
 | Total size | 8 KB |
-| Value types | string, number, boolean, ISO 8601 date string |
+| Value types | text, number, true/false, date as `2026-09-22T10:00:00Z` |
 
-Nested objects and arrays are dropped.
+Nested objects and lists are dropped too. Keep it flat.
 
-In the dashboard, **Settings → Data attributes** lists every key you have sent, with its inferred type. Give a key a label to change how it appears in the inbox, switch on **In list** to show it as a column, and **Filterable** to filter conversations by it.
-
-<Note>
-Attributes are for facts about the user. Device model, OS version, app version, and locale are collected by the SDK and shown with every conversation already.
-</Note>
+Once you've sent a key, it appears under **Settings → Data attributes** in the dashboard, where Feddy has worked out whether it's text, a number, or a date. From there you can give it a friendlier label for the inbox, show it as a column in the conversation list, or make it something you can filter by.
 
 ## Email
 
-Pass `email` when you have it. When your project has a verified sending domain, replies are also emailed to the user, so they hear back even if they never reopen the app. Without a verified domain the email is stored but no mail is sent.
+Pass `email` when you have it. If your project has a verified email domain, replies are also emailed to the user, so they hear back even if they never reopen the app. Without a verified domain the email is stored but nothing is sent.
 
-If you do not pass an email, the widget may ask the user for one after their first message, and only when your project has a verified sending domain.
+If you don't pass an email and your project has a verified domain, the widget may ask the user for one after their first message. It only asks once per device.
+
+<Check>
+Log in on a test build, send a message, and open the inbox. The conversation shows the user's name and the attributes you sent, instead of **Anonymous**.
+</Check>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Contacts" href="/concepts/contacts">
+    What Feddy knows about a person, and where to see it in the dashboard.
+  </Card>
+  <Card title="Team" href="/concepts/team">
+    Verify an email domain so replies reach users by email.
+  </Card>
+  <Card title="iOS SDK reference" href="/reference/ios">
+    The full `identify` signature for Swift.
+  </Card>
+  <Card title="Web SDK reference" href="/reference/web">
+    The full `identify` options for the web widget.
+  </Card>
+</CardGroup>
