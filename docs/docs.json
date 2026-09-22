@@ -131,5 +131,11 @@
       "source": "/quickstart/web",
       "destination": "/quickstart/javascript"
     }
-  ]
+  ],
+  "contextual": {
+    "options": [
+      "copy",
+      "view"
+    ]
+  }
 }
