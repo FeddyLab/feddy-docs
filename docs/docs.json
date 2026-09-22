@@ -19,53 +19,70 @@
     "strict": true
   },
   "navigation": {
-    "groups": [
+    "tabs": [
       {
-        "group": "Get started",
-        "pages": [
-          "index",
-          "getting-started/create-a-project",
-          "getting-started/ai-agent",
+        "tab": "Documentation",
+        "icon": "book-open",
+        "groups": [
           {
-            "group": "Quickstart",
+            "group": "Get started",
             "pages": [
-              "quickstart/swiftui",
-              "quickstart/uikit",
-              "quickstart/javascript",
-              "quickstart/react",
-              "quickstart/vue",
-              "quickstart/svelte",
-              "quickstart/nextjs",
-              "quickstart/astro",
-              "quickstart/wordpress",
-              "quickstart/webflow"
+              "introduction",
+              "getting-started/create-a-project",
+              "getting-started/ai-agent",
+              {
+                "group": "Quickstart",
+                "pages": [
+                  "quickstart/swiftui",
+                  "quickstart/uikit",
+                  "quickstart/javascript",
+                  "quickstart/react",
+                  "quickstart/vue",
+                  "quickstart/svelte",
+                  "quickstart/nextjs",
+                  "quickstart/astro",
+                  "quickstart/wordpress",
+                  "quickstart/webflow"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Learn",
+            "pages": [
+              "concepts/projects",
+              "concepts/conversations",
+              "concepts/contacts",
+              "concepts/assistant",
+              "concepts/team"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/identify-users",
+              "guides/unread-badge"
             ]
           }
         ]
       },
       {
-        "group": "Learn",
-        "pages": [
-          "concepts/projects",
-          "concepts/conversations",
-          "concepts/contacts",
-          "concepts/assistant",
-          "concepts/team"
-        ]
-      },
-      {
-        "group": "Guides",
-        "pages": [
-          "guides/identify-users",
-          "guides/unread-badge"
-        ]
-      },
-      {
-        "group": "Reference",
-        "pages": [
-          "reference/ios",
-          "reference/web",
-          "troubleshooting"
+        "tab": "SDK reference",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "Reference",
+            "pages": [
+              "reference/ios",
+              "reference/web"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "troubleshooting"
+            ]
+          }
         ]
       }
     ]
@@ -98,6 +115,10 @@
     }
   },
   "redirects": [
+    {
+      "source": "/index",
+      "destination": "/introduction"
+    },
     {
       "source": "/quickstart/ios",
       "destination": "/quickstart/swiftui"
