@@ -3,13 +3,13 @@ title: Web SDK reference
 description: Every option and call in the Feddy web widget.
 ---
 
-The widget is one script with no dependencies. It defines a global `Feddy` object with four methods and one callback.
+The widget is one script with no dependencies. Loading it defines a global `Feddy` object with four methods and one callback, and this page is the complete list.
 
 ```html
 <script src="https://core.feddy.app/sdk/feddy.js"></script>
 ```
 
-The script is served with a one-hour cache and open CORS, so it can be loaded from any origin. It renders inside a shadow root attached to `div#feddy-widget`, so your page styles and the widget's never affect each other. Keyboard events inside the widget do not reach your page.
+The script can be loaded from any site; it's served with a one-hour cache and open CORS. The widget draws itself inside a shadow root attached to `div#feddy-widget`, which means it keeps its own styles: your page's CSS never affects it and its CSS never affects your page. Keyboard events inside the widget don't reach your page either.
 
 ## `Feddy.init(options)`
 
@@ -17,15 +17,15 @@ The script is served with a one-hour cache and open CORS, so it can be loaded fr
 Feddy.init({ projectId: 'fd_XXXXXXXXXXXXXXXX' })
 ```
 
-Mounts the widget. Runs once per page; later calls are ignored. If called while the document is still loading, the widget mounts on `DOMContentLoaded`. Logs `[Feddy] init requires a projectId` and does nothing without a project ID.
+Sets the widget up on the page. It only takes effect once per page load; later calls do nothing. If the page is still loading when you call it, the widget waits and appears once the page is ready. Without a project ID it logs `[Feddy] init requires a projectId` and does nothing.
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `projectId` | `string` | required | Copied from **Settings → Install** in the dashboard. Public by design. |
 | `apiUrl` | `string` | `https://core.feddy.app` | Point at a local server during development. |
-| `launcher` | `boolean` | `true` | Show the floating launcher bottom-right. Set `false` to open the panel from your own control. |
+| `launcher` | `boolean` | `true` | Show the floating chat button bottom-right. Set `false` to open the panel from your own element instead. |
 | `sounds` | `boolean` | `true` | Play a chime when a reply arrives. |
-| `locale` | `string` | `navigator.language` | Force a language, any supported BCP 47 tag such as `'ja'` or `'zh-TW'`. |
+| `locale` | `string` | `navigator.language` | Force a language with a code such as `'ja'` or `'zh-TW'`. |
 
 ## `Feddy.identify(options)`
 
@@ -39,15 +39,15 @@ Feddy.identify({
 })
 ```
 
-Binds the visitor's anonymous contact to a user of your product. Safe to call before `init`; the call is queued and sent once the widget mounts. Does nothing without `userId`. Failures are logged with `console.warn` and never thrown. Details and merge rules are in [Identify users](/guides/identify-users).
+Tells Feddy which of your users is on this browser. You can call it before `init`; the call is held and sent once the widget is ready. Does nothing without `userId`. If something goes wrong, it logs a warning with `console.warn` and never throws. What happens on the server, including how records from different devices merge, is in [Identify users](/guides/identify-users).
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `userId` | `string` | Your stable id for the user, 1 to 128 characters. |
-| `email` | `string` | Optional. Lets replies reach the user by email when your project has a verified sending domain. |
+| `userId` | `string` | Your own stable ID for the user, 1 to 128 characters. |
+| `email` | `string` | Optional. Lets replies reach the user by email once your project has a verified email domain. |
 | `name` | `string` | Optional. Shown in the inbox. |
-| `avatarUrl` | `string` | Optional. Absolute `http(s)` URL of a picture you already have of the user, shown in the inbox. Anything else is ignored. |
-| `attributes` | `object` | Optional. Flat object of strings, numbers, and booleans. Limits are listed in [Identify users](/guides/identify-users). |
+| `avatarUrl` | `string` | Optional. An `http(s)` URL of a picture you already have of the user, shown in the inbox. Anything else is ignored. |
+| `attributes` | `object` | Optional facts about the user, such as their plan: a flat object of strings, numbers, and booleans. Limits are listed in [Identify users](/guides/identify-users). |
 
 ## `Feddy.open()` and `Feddy.close()`
 
@@ -55,7 +55,7 @@ Binds the visitor's anonymous contact to a user of your product. Safe to call be
 document.querySelector('#help').addEventListener('click', () => Feddy.open())
 ```
 
-Open or close the panel from your own element. `open()` shows the conversation list. Both do nothing before `init` has mounted the widget.
+Open or close the panel from your own element. `open()` shows the user's conversations and a button to start a new one. Both do nothing until `init` has set the widget up.
 
 ## `Feddy.onUnreadCountChanged`
 
@@ -65,12 +65,12 @@ Feddy.onUnreadCountChanged = (count) => {
 }
 ```
 
-Assign a function to receive the unread count whenever it changes. The widget polls every 45 seconds and again each time the tab becomes visible. Use it to drive your own badge when the launcher is off.
+A function the widget calls whenever the unread count changes. The widget checks every 45 seconds and again each time the tab becomes visible. Use it to drive your own badge when the floating button is off.
 
-## Behavior you do not configure
+## What happens on its own
 
-- **Identity**: an anonymous id is stored in `localStorage` under `feddy_anon_id`. Clearing site data resets it, which is why the widget offers to collect an email after the first message when your project has a verified sending domain.
-- **Language**: the widget ships in English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, French, Spanish, Brazilian Portuguese, and Russian. `zh-TW`, `zh-HK`, and `zh-MO` resolve to Traditional Chinese; `pt` resolves to Brazilian Portuguese. Other tags fall back to English. Text you write in the dashboard is translated server-side per project settings.
-- **Attachments**: up to 5 images per message, 10 MB each before resizing, resized to a 2000 px long edge and encoded as WebP in the browser.
-- **Branding**: name, accent color, and logo come from the dashboard. The accent color is applied as `--fd-accent` inside the shadow root; the widget picks a readable text color for it.
-- **Launcher**: fixed bottom-right, 56 px, with an unread count badge. Its `z-index` is `2147483000`.
+- **Identity**: the first time the widget runs, it creates an anonymous ID and stores it in `localStorage` under `feddy_anon_id`. Clearing site data resets it, which is why the widget offers to collect an email after a first message when your project has a verified email domain.
+- **Language**: the widget ships in English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, French, Spanish, Brazilian Portuguese, and Russian, and follows the browser language. `zh-TW`, `zh-HK`, and `zh-MO` resolve to Traditional Chinese; `pt` resolves to Brazilian Portuguese. Other languages fall back to English. Text you write in the dashboard, such as topics, is translated on the server according to your project settings.
+- **Attachments**: up to 5 images per message, 10 MB each before resizing. The browser resizes them so the longest edge is 2000 px and converts them to WebP before upload.
+- **Branding**: the name, accent color, and logo users see come from the dashboard. The accent color is applied as `--fd-accent` inside the shadow root, and the widget picks a readable text color to go with it.
+- **Floating button**: fixed bottom-right, 56 px, with an unread count badge. Its `z-index` is `2147483000`, so it sits above everything on the page.

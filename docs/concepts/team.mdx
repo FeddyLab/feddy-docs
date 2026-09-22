@@ -1,7 +1,9 @@
 ---
 title: Team
-description: Members, how you are notified, and how replies reach users by email.
+description: Inviting teammates, how you find out about new messages, and how replies reach users by email.
 ---
+
+Feddy is built for a small team answering together: one inbox, everyone sees the same conversations, and a reply from any of you reads as a reply from the product. This page covers who can see a project, how you're told about new messages, and how your replies travel.
 
 ## Members
 
@@ -10,23 +12,44 @@ A project's **Members** page lists who can see its inbox. There are two roles:
 - **Owner**: every project, plus members and billing.
 - **Member**: this project's inbox only.
 
-Invite by email. Invitations expire after 7 days. Owners can disable a member without removing them, and restore them later.
+Invite people by email. An invitation is good for 7 days. Owners can disable a member without removing them, which keeps their history in place, and restore them later.
 
 ## Notifications
 
-Each person sets their own under **Account → Notifications**.
+Everyone chooses their own under **Account → Notifications**.
 
-- **Email**: a message for new conversations and replies, either immediately or combined every 30 minutes, 3 hours, or 12 hours.
-- **Dashboard**: a sound on new messages, the unread count in the browser tab title, and desktop notifications while you are away from the tab. Desktop notifications are a per-browser setting.
+- **Email**: a message for each new conversation and reply, either right away or bundled every 30 minutes, 3 hours, or 12 hours.
+- **Dashboard**: a sound when a message arrives, the unread count in the browser tab's title, and desktop notifications while you're away from the tab. Desktop notifications are a per-browser setting, so switch them on in each browser you use.
 
 ## Replies by email
 
-Replies always appear inside your app or site. They are also emailed to the user when two things are true: the contact has an email, and your project has a verified sending domain under **Settings → Email domain**.
+Replies always appear inside your app or site. They also go out by email when two things are true: Feddy has an email for the contact, and your project has a verified email domain.
 
-Add a subdomain such as `support.yourapp.com`, publish the DNS records shown, and replies go out from your own address with the full reply in the body. Until the domain is verified, replies are shown only in the app, and the SDK does not ask users for an email.
+To set one up, go to **Settings → Email domain**, add a subdomain of your own such as `support.yourapp.com`, and publish the DNS records shown there. Once the domain is verified, replies go out from your own address, with the full reply in the body so the user can read it without opening the app.
 
-Feddy never emails your users from a Feddy address. Mail to you and your team, such as notifications and invitations, comes from Feddy's own domain.
+Until then, replies are shown only in the app, and the SDK doesn't ask users for an email, since there'd be nothing to send.
+
+<Note>
+Feddy never emails your users from a Feddy address. Mail to you and your team, such as notifications and invitations, comes from Feddy's own domain; mail to your users only ever comes from yours.
+</Note>
 
 ## Saved replies
 
-**Settings → Saved replies** holds snippets you send often. Give one a shortcut and type `/shortcut` in the reply box to insert it.
+**Settings → Saved replies** holds the answers you send often. Give one a shortcut, then type `/shortcut` in the reply box to drop it in.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Pass a user's email so replies can reach them once your domain is verified.
+  </Card>
+  <Card title="Contacts" href="/concepts/contacts">
+    Where a contact's email comes from and how it's used.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    Replies, notes, and what counts as unread for your team.
+  </Card>
+  <Card title="Assistant" href="/concepts/assistant">
+    Let the assistant handle repeat questions so your team sees fewer of them.
+  </Card>
+</CardGroup>

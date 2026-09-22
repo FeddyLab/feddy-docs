@@ -1,54 +1,110 @@
 ---
 title: Troubleshooting
-description: What to check when Feddy does not behave as expected.
+description: What to check when Feddy doesn't behave as expected, on iOS, on the web, and in the inbox.
 ---
 
-## Nothing happens when I call `present()`
+Most problems come down to one of a few things: Feddy hasn't been set up yet when something tries to open it, the project ID doesn't match, or a feature needs a setting that isn't on. Find your symptom below.
 
-`configure` has not run yet. The console shows `[Feddy] present() called before configure(projectId:)`. Call `configure` in `App.init` or `application(_:didFinishLaunchingWithOptions:)`, before any view can trigger `present()`.
+## iOS
 
-## The web widget does not appear
+<AccordionGroup>
+  <Accordion title="Nothing happens when I call present()">
+    **Possible cause:** `configure` hasn't run yet. The console shows `[Feddy] present() called before configure(projectId:)`.
 
-- Check the console for `[Feddy] init requires a projectId`.
-- Confirm the script tag loaded: `typeof Feddy` should be `"object"`.
-- If you passed `launcher: false`, nothing is drawn until you call `Feddy.open()`.
-- `init` is ignored after the first call. Reloading the page is the only way to re-initialize.
+    **Solution:** Call `Feddy.configure` in your app's `init` (SwiftUI) or in `application(_:didFinishLaunchingWithOptions:)` (UIKit), so it runs before any screen can call `present()`.
+  </Accordion>
 
-## Messages do not arrive in the inbox
+  <Accordion title="The unread badge doesn't update">
+    **Possible cause:** `.feddyUnreadBadge()` only draws inside a `List`, `Form`, or `TabView`. Anywhere else it does nothing.
 
-- Compare the project ID in code with **Settings → Install**. A wrong ID fails silently for the user.
-- Check you are looking at the right project in the dashboard sidebar.
-- If you set `apiUrl` or `apiURL` for development, make sure production builds use the default.
+    **Solution:** Use `FeddyUnreadDot` for a marker you place yourself, or read the count from `FeddyUnread.shared`. See [Unread badge](/guides/unread-badge).
 
-## The unread badge does not update
+    **Another possible cause:** the SDK stops checking for replies while the app is in the background, so the badge can be stale for a moment after the user comes back.
 
-- iOS: `.feddyUnreadBadge()` draws only inside `List`, `Form`, or `TabView`. Elsewhere use `FeddyUnreadDot` or observe `FeddyUnread.shared`.
-- iOS: polling pauses while the app is suspended. Call `Feddy.refresh()` when the scene becomes active.
-- Web: the count refreshes every 45 seconds and when the tab becomes visible. Assign `Feddy.onUnreadCountChanged` before you expect a callback.
-- Reading a conversation clears its count. Opening the list alone does not.
+    **Solution:** Call `Feddy.refresh()` when the app becomes active.
 
-## Attributes are missing in the inbox
+    Also keep in mind that only opening a conversation clears its count. Opening the list of conversations doesn't.
+  </Accordion>
 
-Attributes over the limits are dropped without an error: more than 20 keys, a key over 40 characters, a value over 255 characters, nested objects or arrays, or a total over 8 KB. On iOS, values that are not `String`, `Bool`, a number, or `Date` are dropped on the device. Remember that each `identify` call replaces the whole set.
+  <Accordion title="The attachment button is missing">
+    **Possible cause:** The image picker needs iOS 16. On iOS 15 the attachment row isn't shown.
 
-## Users are never asked for an email
+    **Another possible cause:** Attachments are a paid-plan feature.
 
-The widget asks only when the project has a verified sending domain, and only once per device. Verify a domain under **Settings → Email domain**, or pass `email` in `identify`.
+    Only PNG, JPEG, and WebP images are accepted, up to 5 per message.
+  </Accordion>
+</AccordionGroup>
 
-## Replies are not emailed to users
+## Web
 
-All three must hold: the contact has an email, the project's sending domain is verified, and your plan includes email to users. Replies still appear in the app either way.
+<AccordionGroup>
+  <Accordion title="The widget doesn't appear">
+    **Possible cause:** `init` was called without a project ID. The console shows `[Feddy] init requires a projectId`.
 
-## The attachment button is missing
+    **Solution:** Pass `projectId` to `Feddy.init`, copied from **Settings → Install**.
 
-- iOS: the picker requires iOS 16. On iOS 15 the row is not shown.
-- Attachments are a paid-plan feature.
-- Only PNG, JPEG, and WebP are accepted, up to 5 per message.
+    **Another possible cause:** The script never loaded. In the console, `typeof Feddy` should print `"object"`; if it prints `"undefined"`, check the script tag's URL and that nothing is blocking it.
 
-## The widget is in the wrong language
+    **Another possible cause:** You passed `launcher: false`, which turns off the floating button. Nothing is drawn until you call `Feddy.open()` from your own element.
 
-The SDK follows the device or browser language and falls back to English for languages it does not ship. On the web, pass `locale` to `init` to force one. Text you wrote in the dashboard uses your translations when one exists for the user's language, and your default text otherwise.
+    Note that `init` only takes effect once per page load. To start over, reload the page.
+  </Accordion>
 
-## The assistant answered something it should not have
+  <Accordion title="The unread count doesn't update on my own badge">
+    **Possible cause:** `Feddy.onUnreadCountChanged` was assigned after the count changed, so the first update was missed.
 
-The assistant only uses your answers and your About text. Find the answer that matched, tighten its keywords or wording, and use **Try it** on the Knowledge page to confirm the change before users see it.
+    **Solution:** Assign it right after `init`. The widget checks every 45 seconds and whenever the tab becomes visible, and calls your function each time the number changes.
+
+    Also keep in mind that only opening a conversation clears its count. Opening the list of conversations doesn't.
+  </Accordion>
+
+  <Accordion title="The widget is in the wrong language">
+    **Possible cause:** The widget follows the browser's language and falls back to English for languages it doesn't ship.
+
+    **Solution:** Pass `locale` to `init` to force one, for example `'ja'` or `'zh-TW'`. Text you wrote in the dashboard, such as topics and the fallback message, uses your translation when one exists for the user's language and your default text otherwise.
+  </Accordion>
+</AccordionGroup>
+
+## Inbox and email
+
+<AccordionGroup>
+  <Accordion title="Messages don't arrive in the inbox">
+    **Possible cause:** The project ID in your code doesn't match the one under **Settings → Install**. A wrong ID fails silently for the user.
+
+    **Another possible cause:** You're looking at a different project. Check the project picker in the dashboard sidebar.
+
+    **Another possible cause:** A development build is still pointed at a local server through `apiUrl` (web) or `apiURL` (iOS).
+
+    **Solution:** Compare the IDs character by character, and make sure production builds use the default server.
+  </Accordion>
+
+  <Accordion title="Attributes are missing from a contact">
+    **Possible cause:** Anything over the limits is dropped without an error: more than 20 keys, a key over 40 characters, a value over 255 characters, nested objects or lists, or more than 8 KB in total. On iOS, a value that isn't a `String`, `Bool`, a number, or a `Date` is dropped on the device.
+
+    **Another possible cause:** Each `identify` call replaces the whole set. A key you left out of the latest call is gone.
+
+    **Solution:** Keep attributes flat and within the limits, and send every attribute you want to keep on each call. See [Identify users](/guides/identify-users).
+  </Accordion>
+
+  <Accordion title="Users are never asked for an email">
+    **Possible cause:** The widget only asks when your project has a verified email domain, and only once per device.
+
+    **Solution:** Verify a domain under **Settings → Email domain**, or pass `email` in `identify` so there's nothing to ask for.
+  </Accordion>
+
+  <Accordion title="Replies aren't emailed to users">
+    **Possible cause:** All three must be true: Feddy has an email for the contact, your project's email domain is verified, and your plan includes email to users.
+
+    **Solution:** Check each one under **Settings → Email domain** and the contact's **Details** panel. Replies still appear in the app either way.
+  </Accordion>
+
+  <Accordion title="The assistant answered something it shouldn't have">
+    **Possible cause:** One of your answers matched more broadly than you meant it to. The assistant only ever uses your answers and your **About your app** text, so the source is in there.
+
+    **Solution:** Find the answer that matched, tighten its keywords or wording, and use **Try it** on the Knowledge page to confirm the change before users see it.
+  </Accordion>
+</AccordionGroup>
+
+## Still stuck?
+
+Use the chat button in the bottom-right corner of your dashboard. It's Feddy's own widget, going to the same kind of inbox you're setting up, and a real person answers.

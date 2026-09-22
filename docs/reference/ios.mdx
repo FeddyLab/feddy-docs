@@ -1,11 +1,11 @@
 ---
 title: iOS SDK reference
-description: Every public call in the Feddy Swift Package.
+description: Every public call in the Feddy Swift package, with its signature and what it does.
 ---
 
-The Swift Package exposes one namespace, `Feddy`, plus three SwiftUI helpers for unread counts. Everything else is internal.
+The Swift package gives you one namespace, `Feddy`, plus three SwiftUI helpers for showing unread counts. Everything else is internal, so this page is the complete list of what you can call.
 
-Requirements: iOS 15 or later, Swift 5.9 or later, no third-party dependencies. Package URL `https://github.com/FeddyLab/feddy-ios`, product `Feddy`.
+Requirements: iOS 15 or later, Swift 5.9 or later, no other packages. Package URL `https://github.com/FeddyLab/feddy-ios`, product `Feddy`.
 
 ## `Feddy.configure(projectId:apiURL:)`
 
@@ -13,9 +13,9 @@ Requirements: iOS 15 or later, Swift 5.9 or later, no third-party dependencies. 
 static func configure(projectId: String, apiURL: URL = URL(string: "https://core.feddy.app")!)
 ```
 
-Call once at launch. Later calls are ignored. Starts fetching the project configuration and the unread count, and polls the unread count every 30 seconds while the app runs.
+Sets Feddy up for this app. Call it once at launch, before anything else can open Feddy; later calls do nothing. It starts loading your project's settings and the unread count, and from then on checks for new replies every 30 seconds while the app is running.
 
-- `projectId`: copied from **Settings → Install** in the dashboard. Public by design.
+- `projectId`: copied from **Settings → Install** in the dashboard. Public by design; see [Create a project](/getting-started/create-a-project).
 - `apiURL`: leave the default in production. Point it at a local server during development.
 
 ## `Feddy.present()`
@@ -24,7 +24,7 @@ Call once at launch. Later calls are ignored. Starts fetching the project config
 @MainActor static func present()
 ```
 
-Opens the conversation list as a page sheet over the top-most view controller. Works from SwiftUI and UIKit. Ignored if the sheet is already open. Logs `[Feddy] present() called before configure(projectId:)` and does nothing if called before `configure`.
+Opens Feddy as a sheet that slides up over whatever's on screen, showing the user's conversations and a button to start a new one. Works from SwiftUI and UIKit alike. Does nothing if the sheet is already open. If called before `configure`, it logs `[Feddy] present() called before configure(projectId:)` and does nothing.
 
 ## `Feddy.presentNewConversation()`
 
@@ -32,7 +32,7 @@ Opens the conversation list as a page sheet over the top-most view controller. W
 @MainActor static func presentNewConversation()
 ```
 
-Same as `present()`, but opens straight into the compose form.
+Same as `present()`, but opens straight onto the new-message screen.
 
 ## `Feddy.identify(userId:email:name:avatarUrl:attributes:)`
 
@@ -40,11 +40,13 @@ Same as `present()`, but opens straight into the compose form.
 static func identify(userId: String, email: String? = nil, name: String? = nil, avatarUrl: String? = nil, attributes: [String: Any] = [:])
 ```
 
-Binds the device's anonymous contact to a user of your app. Call it after login and whenever attributes change. Does nothing before `configure`. Details and merge rules are in [Identify users](/guides/identify-users).
+Tells Feddy which of your users is on this device. Call it after login and whenever the details you send change; it's safe to call as often as you like. Does nothing before `configure`. What happens on the server, including how records from different devices merge, is in [Identify users](/guides/identify-users).
 
-- `userId`: your stable id for the user, 1 to 128 characters.
-- `avatarUrl`: optional absolute `http(s)` URL of a picture you already have of the user, shown in the inbox. Anything else is ignored.
-- `attributes`: values may be `String`, `Bool`, any number, or `Date`. `Date` is sent as an ISO 8601 string. Other types are dropped on the device. Server-side limits are listed in [Identify users](/guides/identify-users).
+- `userId`: your own stable ID for the user, 1 to 128 characters.
+- `email`: optional. Lets replies reach the user by email once your project has a verified email domain.
+- `name`: optional. Shown in the inbox.
+- `avatarUrl`: optional. An `http(s)` URL of a picture you already have of the user, shown in the inbox. Anything else is ignored.
+- `attributes`: optional facts about the user, such as their plan. Values may be `String`, `Bool`, any number, or `Date`; a `Date` is sent as text like `2026-09-22T10:00:00Z`. Other types are dropped on the device. Server-side limits are listed in [Identify users](/guides/identify-users).
 
 ## `Feddy.unreadCount(_:)`
 
@@ -52,7 +54,7 @@ Binds the device's anonymous contact to a user of your app. Call it after login 
 static func unreadCount(_ completion: @escaping (Int) -> Void)
 ```
 
-Fetches the current number of unread replies. The completion runs on the main thread.
+Fetches the current number of unread replies and hands it to `completion` on the main thread.
 
 ## `Feddy.refresh()`
 
@@ -60,7 +62,7 @@ Fetches the current number of unread replies. The completion runs on the main th
 static func refresh()
 ```
 
-Re-fetches the unread count now. Call it when your app returns to the foreground so a badge is current before the next poll.
+Asks for a fresh unread count right now instead of waiting for the next scheduled check. Call it when your app returns to the foreground so a badge is up to date immediately.
 
 ```swift
 .onChange(of: scenePhase) { phase in
@@ -74,7 +76,7 @@ Re-fetches the unread count now. Call it when your app returns to the foreground
 @MainActor static var onUnreadCountChanged: ((Int) -> Void)?
 ```
 
-Called on the main thread whenever the unread count changes. Use it for a UIKit badge; SwiftUI apps should use the helpers below instead.
+A function Feddy calls, on the main thread, whenever the unread count changes. Meant for UIKit badges; SwiftUI apps should use the helpers below instead.
 
 ## `View.feddyUnreadBadge()`
 
@@ -82,7 +84,7 @@ Called on the main thread whenever the unread count changes. Use it for a UIKit 
 func feddyUnreadBadge() -> some View
 ```
 
-Adds the system row badge with the unread count and keeps it current. Nothing is drawn at zero. Badges are rendered only inside `List`, `Form`, and `TabView`; anywhere else the modifier does nothing.
+Adds the system row badge with the unread count and keeps it current. Nothing is drawn at zero. Badges only render inside `List`, `Form`, and `TabView`; anywhere else the modifier does nothing.
 
 ## `FeddyUnreadDot`
 
@@ -92,7 +94,7 @@ struct FeddyUnreadDot: View {
 }
 ```
 
-A red marker you place yourself, for rows that draw their own chevron or for places a list badge cannot go. Renders nothing at zero. Pass `showsCount: true` to draw the number inside the marker.
+A red marker you place yourself, for rows that draw their own chevron or for spots a list badge can't reach. Renders nothing at zero. Pass `showsCount: true` to draw the number inside the marker.
 
 ## `FeddyUnread`
 
@@ -103,16 +105,16 @@ A red marker you place yourself, for rows that draw their own chevron or for pla
 }
 ```
 
-The unread count as an observable object, for custom SwiftUI badges.
+The unread count as an observable object, for custom SwiftUI badges. A view that reads it updates itself whenever the count changes.
 
 ```swift
 @ObservedObject private var unread = FeddyUnread.shared
 ```
 
-## Behavior you do not configure
+## What happens on its own
 
-- **Identity**: an anonymous id is generated on first use and stored in the Keychain, so history survives reinstalls.
-- **Language**: the sheet ships in English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, French, Spanish, Brazilian Portuguese, and Russian, following the device language. Other languages fall back to English. Text you write in the dashboard is translated server-side per project settings.
-- **Attachments**: up to 5 images per message, resized to a 3000 px long edge before upload. The picker requires iOS 16; on iOS 15 the attachment row is absent.
-- **Branding**: name, accent color, and logo come from the dashboard, not from code.
-- **Privacy manifest**: the package ships a `PrivacyInfo.xcprivacy`.
+- **Identity**: the first time the SDK runs, it creates an anonymous ID and stores it in the Keychain, so a user's history survives reinstalls.
+- **Language**: the sheet ships in English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, French, Spanish, Brazilian Portuguese, and Russian, and follows the device language. Other languages fall back to English. Text you write in the dashboard, such as topics, is translated on the server according to your project settings.
+- **Attachments**: up to 5 images per message, resized so the longest edge is 3000 px before upload. The picker needs iOS 16; on iOS 15 the attachment row isn't shown.
+- **Branding**: the name, accent color, and logo users see come from the dashboard, not from code.
+- **Privacy manifest**: the package ships a `PrivacyInfo.xcprivacy` that declares what the SDK collects, so there's nothing for you to add for App Store review.

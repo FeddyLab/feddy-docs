@@ -1,29 +1,56 @@
 ---
 title: Projects
-description: One project per app or website, identified by a public project ID.
+description: What a project holds, how to organize apps and sites into projects, and why the project ID is safe to share.
 ---
 
-A project is one app or website and everything that comes from it: conversations, contacts, topics, answers, and settings. Create one project per product. An iOS app and its website can share a project if the same people answer both, or use two if you want separate inboxes.
+A project is the home for one app or website in Feddy. Everything that comes from that app lives inside it: the conversations, the people who wrote in, the topics users pick from, the answers your assistant can give, and the settings that shape how Feddy looks and behaves. Each project has its own inbox.
 
-## Project ID
+You'll use projects to:
 
-Every project has an ID of the form `fd_` followed by 16 characters. Copy it from **Settings → Install**. The SDK sends it with every request so the server knows which project a message belongs to.
+- Keep each product's conversations in their own inbox.
+- Decide who on your team can see which inbox.
+- Give each product its own branding, topics, and automatic answers.
 
-The ID ships inside your binary and in your page source, so anyone can read it. It is not a secret and never was: commit it, hard-code it, put it in a public repository. There is no way to rotate it and no need to.
+## One project per product
 
-Abuse of a public ID is handled by rate limits on the server, not by hiding the ID.
+The usual setup is one project for each app or site you support. If you have an iOS app and a website for the same product, they can share a project as long as the same people answer both. Prefer two projects when you want separate inboxes.
 
-## What a project owns
+## The project ID
 
-- **Install**: the project ID and copy-paste snippets for iOS, web, and AI agents.
-- **General**: name, slug, and the brand shown to users: brand name, accent colour, and the reply-time promise shown before and after a user sends a message.
-- **Topics**: the choices users see when they start a conversation.
-- **Data attributes**: the fields you send with `identify`.
-- **Assistant** and **Knowledge**: automatic replies and the answers they draw on.
-- **Saved replies**: snippets you insert into the reply box by typing `/`.
-- **Email domain**: the domain replies are emailed from.
+Every project has an ID that starts with `fd_` followed by 16 characters. Copy it from **Settings → Install**. The SDK sends it with every message so Feddy knows which project, and which inbox, the message belongs to.
+
+**The project ID isn't a secret.** It's built into your app and visible in your page source, so anyone can find it, and that's fine: it only identifies the project. Commit it, hard-code it, put it in a public repository. There's no way to rotate it and no need to. If someone tries to flood your inbox, Feddy limits how many requests one device can send.
+
+## What's inside a project
+
+Everything below lives under **Settings** in the dashboard:
+
+- **Install**: the project ID, and copy-paste snippets for iOS, the web, and coding agents.
+- **General**: the project's name and the short name used in its dashboard links, plus what users see: your brand name, accent color, and the response-time promise shown before and after they send a message.
+- **Topics**: the choices users pick from when they start a conversation.
+- **Data attributes**: the facts you send about users, such as their plan, and how they appear in the inbox.
+- **Assistant** and **Knowledge**: automatic replies, and the answers they're allowed to draw on.
+- **Saved replies**: snippets you can drop into the reply box by typing `/`.
+- **Email domain**: the domain your replies are emailed from.
 - **Members**: who can see this project's inbox.
 
 ## Development and production
 
-Use one project for both. The SDK's `apiUrl` option exists so you can point a development build at a local server; the project ID stays the same. Create a second project only if you want test conversations out of your real inbox.
+You don't need a separate project for testing. The SDK has an `apiUrl` option for pointing a development build at a local server, and the project ID stays the same either way. Create a second project only if you'd rather keep test conversations out of your real inbox.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Create a project" href="/getting-started/create-a-project">
+    Sign up, create your first project, and copy its ID.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What arrives in a project's inbox and what happens to it.
+  </Card>
+  <Card title="Assistant" href="/concepts/assistant">
+    Set up automatic answers for the questions you get most.
+  </Card>
+  <Card title="Team" href="/concepts/team">
+    Invite teammates to a project and connect an email domain.
+  </Card>
+</CardGroup>

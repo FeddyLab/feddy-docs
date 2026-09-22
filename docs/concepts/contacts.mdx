@@ -1,33 +1,57 @@
 ---
 title: Contacts
-description: Who is writing in, from an anonymous device to an identified user with attributes.
+description: Who's writing in, from an anonymous visitor to a user you've identified, and what Feddy knows about them.
 ---
 
-A contact is one person, as far as Feddy can tell. Every conversation belongs to exactly one contact.
+A contact is one person, as far as Feddy can tell. Every conversation belongs to exactly one contact, and everything Feddy knows about that person, from the device they're on to the plan they're paying for, is gathered in one place.
 
-## Anonymous by default
+Contacts let you:
 
-The first time the SDK runs it generates an anonymous id and stores it, in the Keychain on iOS and in `localStorage` on the web. That id is the contact. It survives app reinstalls on iOS. On the web it lasts until the visitor clears site data, which is why the widget can ask for an email after the first message.
+- See who's on the other end of a conversation before you read it.
+- Answer without asking "which plan are you on?" or "what version are you running?"
+- Follow one user's history across every device they've used.
+- Reach users by email when they've left the app.
 
-Anonymous contacts show as **Anonymous** in the inbox, with the device details the SDK collected.
+## Everyone starts anonymous
 
-## Identified
+The first time the SDK runs on a device, it creates an anonymous ID and stores it on that device. That ID is the contact. On iOS it survives reinstalls. In a browser it lasts until the visitor clears the site's data, which is why the widget can ask for an email after a first message: it's the only way to reach a visitor once that ID is gone.
 
-Call `identify` with your own user id to turn the anonymous contact into a known one. The inbox then shows the user's name or email, and their conversations from every device merge into one history. How to call it, and what happens on merge, is in [Identify users](/guides/identify-users).
+Anonymous contacts show as **Anonymous** in the inbox, alongside the device details the SDK collected.
+
+## Identified users
+
+When someone logs in to your app, call `identify` with your own user ID for them. From then on, the inbox shows their name or email instead of **Anonymous**, and conversations from every device they've used are merged into one history. [Identify users](/guides/identify-users) covers how to call it and what happens when two records merge.
 
 ## What you know about a contact
 
-Two kinds of facts appear in the **Details** panel next to a conversation:
+The **Details** panel next to a conversation shows two kinds of facts:
 
-- **Collected by the SDK**: device, OS, app version, language, first and last seen. You do not send these.
-- **From `identify`**: the attributes you chose to send, such as plan or membership status.
+- **Collected by the SDK**: device, operating system, app version, language, and when they were first and last seen. You don't send any of this.
+- **Sent by you with `identify`**: whatever you chose to include, such as their plan or membership status. Feddy calls these attributes.
 
-**Settings → Data attributes** lists every attribute key you have ever sent, with its inferred type. There you can give a key a readable label, show it as a column in the inbox, or make it filterable. New keys appear automatically the first time the SDK sends them.
+**Settings → Data attributes** lists every attribute you've ever sent. Feddy works out whether each one is text, a number, or a date. From there you can give an attribute a friendlier label, show it as a column in the inbox, or make it something you can filter by. A new attribute appears in the list on its own the first time the SDK sends it.
 
 ## Email
 
-A contact's email comes from `identify` or from the user typing it into the widget. It is used for one thing: emailing them your replies, and only when your project has a verified sending domain. See [Team](/concepts/team).
+A contact's email comes from `identify`, or from the user typing it into the widget. Feddy uses it for one thing: emailing them your replies, and only when your project has a verified email domain. See [Team](/concepts/team) for how to set one up.
 
-## Contacts page
+## The Contacts page
 
-**Contacts** lists everyone who has written in, with their conversations and last-seen time. Filter to anonymous contacts only to see how many users you could identify.
+**Contacts** in the dashboard lists everyone who has written in, with their conversations and when they were last seen. Filter to anonymous contacts to see how many people you could be identifying.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Turn anonymous visitors into named users with a plan and a history.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What each conversation carries and what happens to it.
+  </Card>
+  <Card title="Team" href="/concepts/team">
+    Verify an email domain so replies can reach contacts by email.
+  </Card>
+  <Card title="Troubleshooting" href="/troubleshooting">
+    What to check when attributes are missing from the inbox.
+  </Card>
+</CardGroup>
