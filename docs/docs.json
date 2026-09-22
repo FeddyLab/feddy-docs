@@ -60,18 +60,31 @@
       },
       {
         "group": "Guides",
-        "pages": ["guides/identify-users", "guides/unread-badge"]
+        "pages": [
+          "guides/identify-users",
+          "guides/unread-badge"
+        ]
       },
       {
         "group": "Reference",
-        "pages": ["reference/ios", "reference/web", "troubleshooting"]
+        "pages": [
+          "reference/ios",
+          "reference/web",
+          "troubleshooting"
+        ]
       }
     ]
   },
   "navbar": {
     "links": [
-      { "label": "Pricing", "href": "https://feddy.app/pricing/" },
-      { "type": "github", "href": "https://github.com/FeddyLab" }
+      {
+        "label": "Pricing",
+        "href": "https://feddy.app/pricing/"
+      },
+      {
+        "type": "github",
+        "href": "https://github.com/FeddyLab"
+      }
     ],
     "primary": {
       "type": "button",
@@ -87,11 +100,16 @@
   "seo": {
     "metatags": {
       "canonical": "https://feddy.app/docs"
-    },
-    "trailingSlash": true
+    }
   },
   "redirects": [
-    { "source": "/quickstart/ios", "destination": "/quickstart/swiftui" },
-    { "source": "/quickstart/web", "destination": "/quickstart/javascript" }
+    {
+      "source": "/quickstart/ios",
+      "destination": "/quickstart/swiftui"
+    },
+    {
+      "source": "/quickstart/web",
+      "destination": "/quickstart/javascript"
+    }
   ]
 }
