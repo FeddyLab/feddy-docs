@@ -57,6 +57,86 @@ Nested objects and lists are dropped too. Keep it flat.
 
 Once you've sent a key, it appears under **Settings → Data attributes** in the dashboard, where Feddy has worked out whether it's text, a number, or a date. From there you can give it a friendlier label for the inbox, show it as a column in the conversation list, or make it something you can filter by.
 
+## Subscription status
+
+Whether someone is paying is usually the first thing you want to know when they write in. Your subscription tool already knows it, so pass it on as attributes, and call `identify` again whenever it changes: after a purchase, a renewal, a cancellation, or a refund.
+
+Each call replaces the whole set of attributes, so keep one function that sends all of them, and call that from everywhere, including your subscription listener:
+
+```swift
+func updateFeddy(isSubscribed: Bool, renewsAt: Date?) {
+    guard let user = currentUser else { return }
+    var attributes: [String: Any] = ["plan": user.plan, "is_subscribed": isSubscribed]
+    if let renewsAt { attributes["renews_at"] = renewsAt }
+    Feddy.identify(userId: user.id, email: user.email, attributes: attributes)
+}
+```
+
+Then call it whenever your subscription tool reports a change. Replace `pro` or `premium` with the name of your own entitlement or access level.
+
+<CodeGroup>
+
+```swift RevenueCat
+Task {
+    for await info in Purchases.shared.customerInfoStream {
+        let pro = info.entitlements["pro"]
+        updateFeddy(isSubscribed: pro?.isActive == true, renewsAt: pro?.expirationDate)
+    }
+}
+```
+
+```swift Adapty
+final class SubscriptionObserver: AdaptyDelegate {
+    nonisolated func didLoadLatestProfile(_ profile: AdaptyProfile) {
+        let premium = profile.accessLevels["premium"]
+        updateFeddy(isSubscribed: premium?.isActive == true, renewsAt: premium?.expiresAt)
+    }
+}
+
+// After Adapty.activate
+Adapty.delegate = subscriptionObserver
+```
+
+```swift Superwall
+subscriptionCancellable = Superwall.shared.$subscriptionStatus
+    .receive(on: DispatchQueue.main)
+    .sink { status in
+        switch status {
+        case .active: updateFeddy(isSubscribed: true, renewsAt: nil)
+        case .inactive: updateFeddy(isSubscribed: false, renewsAt: nil)
+        case .unknown: break
+        }
+    }
+```
+
+```swift StoreKit 2
+func refreshSubscription() async {
+    var active: Transaction?
+    for await result in Transaction.currentEntitlements {
+        if case .verified(let transaction) = result, transaction.productType == .autoRenewable {
+            active = transaction
+        }
+    }
+    updateFeddy(isSubscribed: active != nil, renewsAt: active?.expirationDate)
+}
+
+// At launch, and whenever a transaction changes
+Task {
+    await refreshSubscription()
+    for await _ in Transaction.updates {
+        await refreshSubscription()
+    }
+}
+```
+
+</CodeGroup>
+
+With StoreKit 2, if your app already listens to `Transaction.updates` to finish purchases, call `refreshSubscription()` from that listener instead of starting a second one.
+
+<Note>
+Feddy doesn't connect to RevenueCat, Adapty, or Superwall, and never needs their keys. Your app passes along what it already knows.
+</Note>
+
 ## Email
 
 Pass `email` when you have it. If your project has a verified email domain, replies are also emailed to the user, so they hear back even if they never reopen the app. Without a verified domain the email is stored but nothing is sent.
