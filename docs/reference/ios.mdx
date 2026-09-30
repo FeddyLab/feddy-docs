@@ -24,7 +24,7 @@ Sets Feddy up for this app. Call it once at launch, before anything else can ope
 @MainActor static func present()
 ```
 
-Opens Feddy as a sheet that slides up over whatever's on screen, showing the user's conversations and a button to start a new one. Works from SwiftUI and UIKit alike. Does nothing if the sheet is already open. If called before `configure`, it logs `[Feddy] present() called before configure(projectId:)` and does nothing.
+Opens Feddy as a sheet that slides up over whatever's on screen. It opens on the home: a greeting, a button to send a new message, and the user's recent conversations, with a link to all of them. Works from SwiftUI and UIKit alike. Does nothing if the sheet is already open. If called before `configure`, it logs `[Feddy] present() called before configure(projectId:)` and does nothing.
 
 ## `Feddy.presentNewConversation()`
 

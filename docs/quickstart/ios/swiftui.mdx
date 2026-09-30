@@ -22,7 +22,7 @@ https://github.com/FeddyLab/feddy-ios
 If you manage dependencies in a `Package.swift` file instead, add:
 
 ```swift
-.package(url: "https://github.com/FeddyLab/feddy-ios", from: "0.7.0")
+.package(url: "https://github.com/FeddyLab/feddy-ios", from: "0.8.0")
 ```
 </Step>
 <Step title="Tell Feddy which project this is">
@@ -56,7 +56,7 @@ Form {
 }
 ```
 
-`present()` slides Feddy up over whatever is on screen, showing the user's past conversations and a button to start a new one. If you'd rather skip straight to the new-message screen, call `presentNewConversation()` instead.
+`present()` slides Feddy up over whatever is on screen and opens on its home: a greeting, a button to send a new message, and the user's recent conversations. If you'd rather skip straight to the new-message screen, call `presentNewConversation()` instead.
 
 `.feddyUnreadBadge()` puts a count on the row when a reply is waiting, the same way iOS shows counts in Settings. It disappears when there's nothing unread.
 </Step>
