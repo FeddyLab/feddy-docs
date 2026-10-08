@@ -1,9 +1,9 @@
 ---
 title: Assistant
-description: Automatic replies built from answers you approve, and a Copilot that drafts replies for you in the inbox.
+description: Automatic replies built from your answers and your docs, and a Copilot that drafts replies for you in the inbox.
 ---
 
-The assistant does two jobs. It answers users on its own, within limits you set, and it helps you write replies in the inbox. It never makes up facts about your product: everything it says to a user comes from answers you wrote or approved.
+The assistant does two jobs. It answers users on its own, within limits you set, and it helps you write replies in the inbox. It never makes up facts about your product: everything it says to a user comes from answers you wrote or approved, or from the docs and text you added as sources.
 
 You'll use it to:
 
@@ -13,7 +13,27 @@ You'll use it to:
 
 ## Answers
 
-An answer is the reply you'd give to a common question, saved once so it can be reused. Each one has a title for your own reference, and optionally keywords, a topic, and a platform that narrow when it applies. Write them under **Settings → Assistant → Answers**, or import a batch from the same page.
+An answer is the reply you'd give to a common question, saved once so it can be reused. Each one has a title for your own reference, and optionally keywords, a topic, and a platform that narrow when it applies. Write them under **Settings → Assistant → Knowledge**, or import a batch from the same page.
+
+## Sources
+
+A source is material the assistant reads to answer questions your answers don't cover. Add one from **Add** on the Knowledge page:
+
+- **Website**: the address of your docs or help center. The assistant reads that page and the pages under it on the same site, and reads them again every week. Use **Recrawl** to read them again now.
+- **Text**: anything you paste, or a `.md` or `.txt` file you drop in. Only the text is kept, not the file.
+
+The assistant writes replies from sources in its own words and never sends a passage as is. When a source and one of your answers disagree, the answer wins. If no answer or source covers a question, the user gets the fallback message, as before.
+
+Each source has a **Used by** setting:
+
+- **Assistant and team**: the assistant can use it in replies to users. Anything in it may end up in a reply, so add only what any user may read.
+- **Team only**: only the Copilot reads it, for drafts you review before sending. Use this for internal notes.
+
+Open a source to see every passage the assistant reads from it. If a site draws its pages with JavaScript, there's no text to read and the source shows why. Add the text instead.
+
+Under a reply built from a source, the conversation shows **Based on** with a link to the page, so you can check it.
+
+## About your app
 
 **Settings → Assistant → Settings** has an **About your app** box: a short description the assistant reads before every reply. Fill it in. It's how the assistant knows what your product is and what it isn't.
 
@@ -24,7 +44,7 @@ Choose how the assistant replies to users under **Settings → Assistant**:
 | Mode | What users get |
 | --- | --- |
 | Keyword answers only | An answer whose keyword appears in their message. Anything else gets the fallback message. |
-| Answer with AI | A reply composed from your answers. If your answers don't cover the question, the user gets the fallback message and the conversation waits for you. |
+| Answer with AI | A reply composed from your answers and sources. If they don't cover the question, the user gets the fallback message and the conversation waits for you. |
 | Suggest replies to me | Nothing automatic beyond keyword answers. Instead, the AI drafts a reply for you in the inbox. |
 
 Turn **Enabled** off to send nothing automatically.
@@ -49,15 +69,15 @@ When this is on, the assistant reads conversations you close and drafts new answ
 
 ## Copilot
 
-Next to every conversation, the **Copilot** tab has already read the thread, your notes, and your answers. Ask it to draft a reply, summarize, translate into the user's language, or soften the tone. What it writes goes into your reply box, where you edit it and send it yourself. Nothing reaches the user until you press send.
+Next to every conversation, the **Copilot** tab has already read the thread, your notes, your answers, and your sources, including the ones for your team only. Ask it to draft a reply, summarize, translate into the user's language, or soften the tone. What it writes goes into your reply box, where you edit it and send it yourself. Nothing reaches the user until you press send.
 
 ## Try it
 
-**Try it**, under the list on the Answers page, runs a message through the assistant exactly as a user would see it, with a topic, platform, and language of your choosing. Nothing is sent to anyone.
+**Try it**, at the top of the Knowledge page, runs a message through the assistant exactly as a user would see it, with a topic, platform, and language of your choosing. It also lists the source passages it found for the message and marks the ones the reply used. Nothing is sent to anyone.
 
 ## Availability
 
-AI answers and the Copilot are available on paid plans. Keyword answers and the fallback message work on every plan.
+AI answers, sources, and the Copilot are available on paid plans. Pro includes 5 sources and 500 pages per project, Business 20 sources and 3,000 pages; pasted text counts as one page. Keyword answers and the fallback message work on every plan.
 
 ## Related guides
 
