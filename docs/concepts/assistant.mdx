@@ -23,7 +23,7 @@ A source is material the assistant reads to answer questions your answers don't 
 - **App Store**: the link to your app on the App Store. The assistant reads the description, the release notes of the latest version, and which devices, system versions, and languages the app supports. Prices are left out, and lines in the description that state a price are skipped. The listing is read from the country in the link and again every week, or now with **Refresh**.
 - **Text**: anything you paste, or a `.md` or `.txt` file you drop in. Only the text is kept, not the file.
 
-The assistant writes replies from sources in its own words and never sends a passage as is. When a source and one of your answers disagree, the answer wins. If no answer or source covers a question, the user gets the fallback message, as before.
+The assistant writes replies from your answers and sources in its own words and never sends a passage as is. When a source and one of your answers disagree, the answer wins. If nothing covers a question, the assistant hands the conversation to you.
 
 Each source has a **Used by** setting:
 
@@ -47,12 +47,16 @@ Choose how the assistant replies to users under **Settings → Assistant**:
 | Mode | What users get |
 | --- | --- |
 | Keyword answers only | An answer whose keyword appears in their message. Anything else gets the fallback message. |
-| Answer with AI | A reply composed from your answers and sources. If they don't cover the question, the user gets the fallback message and the conversation waits for you. |
+| Answer with AI | A reply written from your answers and sources, using what's known about their device and app version and any screenshot they attached. A message too short to answer gets one question back. Follow-ups get replies too, up to three per conversation. If part of a message isn't covered, the assistant answers the rest and leaves that part to you. |
 | Suggest replies to me | Nothing automatic beyond keyword answers. Instead, the AI drafts a reply for you in the inbox. |
 
 Turn **Enabled** off to send nothing automatically.
 
 Whatever the mode, the assistant never changes a conversation's status and never marks it resolved. Only you, or the user, can close a conversation.
+
+## Handing over to you
+
+The assistant steps back and leaves the conversation to you when the user asks for a person, when nothing in your answers or sources covers the question, after answering only part of a message, or after its third reply. If it hasn't replied yet, the user gets the fallback message. If it has, it tells them in its own words that you'll take it from here. After that it stays quiet in the conversation, even if a later message is one it could answer.
 
 ## Fallback message
 
@@ -72,7 +76,7 @@ When this is on, the assistant reads conversations you close and drafts new answ
 
 ## Copilot
 
-Next to every conversation, the **Copilot** tab has already read the thread, your notes, your answers, and your sources, including the ones for your team only. Ask it to draft a reply, summarize, translate into the user's language, or soften the tone. What it writes goes into your reply box, where you edit it and send it yourself. Nothing reaches the user until you press send.
+Next to every conversation, the **Copilot** tab has already read the thread, its screenshots, your notes, your answers, and your sources, including the ones for your team only. Ask it to draft a reply, summarize, translate into the user's language, or soften the tone. What it writes goes into your reply box, where you edit it and send it yourself. Nothing reaches the user until you press send.
 
 ## Try it
 
