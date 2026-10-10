@@ -1,9 +1,9 @@
 ---
-title: Assistant
-description: Automatic replies built from your answers and your docs, and a Copilot that drafts replies for you in the inbox.
+title: Milo
+description: Milo, the AI that answers users from your answers and your docs, and the Copilot that drafts replies for you in the inbox.
 ---
 
-The assistant does two jobs. It answers users on its own, within limits you set, and it helps you write replies in the inbox. It never makes up facts about your product: everything it says to a user comes from answers you wrote or approved, or from the docs and text you added as sources.
+Milo is the AI in Feddy. It does two jobs. It answers users on its own, within limits you set, and it helps you write replies in the inbox. It never makes up facts about your product: everything it says to a user comes from answers you wrote or approved, or from the docs and text you added as sources.
 
 You'll use it to:
 
@@ -11,68 +11,86 @@ You'll use it to:
 - Let users know they've been heard while they wait for you.
 - Draft, shorten, translate, or soften a reply before you send it.
 
+Its settings live under **Settings → Milo AI**.
+
 ## Answers
 
-An answer is the reply you'd give to a common question, saved once so it can be reused. Each one has a title for your own reference, and optionally keywords, a topic, and a platform that narrow when it applies. Write them under **Settings → Assistant → Answers**, or import a batch from the same page.
+An answer is the reply you'd give to a common question, saved once so it can be reused. Each one has a title for your own reference, and optionally keywords, a topic, and a platform that narrow when it applies. Write them under **Settings → Milo AI → Answers**, or import a batch from the same page.
 
 ## Sources
 
-A source is material the assistant reads to answer questions your answers don't cover. Add one under **Settings → Assistant → Sources**, where each kind has its own add button:
+A source is material Milo reads to answer questions your answers don't cover. Add one under **Settings → Milo AI → Sources**, where each kind has its own add button:
 
-- **Website**: the address of your docs or help center. The assistant reads that page and the pages under it on the same site, and reads them again every week. Click **Refresh** on its row to read them again now.
-- **App Store**: the link to your app on the App Store. The assistant reads the description, the release notes of the latest version, and which devices, system versions, and languages the app supports. Prices are left out, and lines in the description that state a price are skipped. The listing is read from the country in the link and again every week, or now with **Refresh**.
+- **Website**: the address of your docs or help center. Milo reads that page and the pages under it on the same site, and reads them again every week. Click **Refresh** on its row to read them again now.
+- **App Store**: the link to your app on the App Store. Milo reads the description, the release notes of the latest version, and which devices, system versions, and languages the app supports. Prices are left out, and lines in the description that state a price are skipped. The listing is read from the country in the link and again every week, or now with **Refresh**.
 - **Text**: anything you paste, or a `.md` or `.txt` file you drop in. Only the text is kept, not the file.
 
-The assistant writes replies from your answers and sources in its own words and never sends a passage as is. When a source and one of your answers disagree, the answer wins. If nothing covers a question, the assistant hands the conversation to you.
+Milo writes replies from your answers and sources in its own words and never sends a passage as is. When a source and one of your answers disagree, the answer wins. If nothing covers a question, Milo hands the conversation to you.
 
 Each source has a **Used by** setting:
 
-- **Assistant and team**: the assistant can use it in replies to users. Anything in it may end up in a reply, so add only what any user may read.
+- **Milo and team**: Milo can use it in replies to users. Anything in it may end up in a reply, so add only what any user may read.
 - **Team only**: only the Copilot reads it, for drafts you review before sending. Use this for internal notes.
 
-Open a source to see every passage the assistant reads from it. If a site draws its pages with JavaScript, there's no text to read and the source shows why. Add the text instead.
-
-Under a reply built from a source, the conversation shows **Based on** with a link to the page, so you can check it.
+Open a source to see every passage Milo reads from it. If a site draws its pages with JavaScript, there's no text to read and the source shows why. Add the text instead.
 
 ## About your app
 
-**Settings → Assistant → Settings** has an **About your app** box: a short description the assistant reads before every reply. Fill it in. It's how the assistant knows what your product is and what it isn't.
+**Settings → Milo AI → Settings** has an **About your app** box: a short description Milo reads before every reply. Fill it in. It's how Milo knows what your product is and what it isn't.
 
-For a first draft, click **Draft from a link** and paste your app's App Store link or your website's address. The assistant reads that one page and writes a short paragraph in English, without prices, into the box. Nothing is saved until you click **Save**, so edit it first: add what the page leaves out, and remove anything you don't want the assistant to say.
+For a first draft, click **Draft from a link** and paste your app's App Store link or your website's address. Milo reads that one page and writes a short paragraph in English, without prices, into the box. Nothing is saved until you click **Save**, so edit it first: add what the page leaves out, and remove anything you don't want Milo to say.
 
 ## Modes
 
-Choose how the assistant replies to users under **Settings → Assistant**:
+Choose how Milo replies to users under **Settings → Milo AI → Settings**:
 
 | Mode | What users get |
 | --- | --- |
 | Keyword answers only | An answer whose keyword appears in their message. Anything else gets the fallback message. |
-| Answer with AI | A reply written from your answers and sources, using what's known about their device and app version and any screenshot they attached. A message too short to answer gets one question back. Follow-ups get replies too, up to three per conversation. If part of a message isn't covered, the assistant answers the rest and leaves that part to you. |
-| Suggest replies to me | Nothing automatic beyond keyword answers. Instead, the AI drafts a reply for you in the inbox. |
+| Answer with AI | A reply written from your answers and sources, using what's known about their device and app version and any screenshot they attached. A message too short to answer gets one question back. Follow-ups get replies too, up to three per conversation. If part of a message isn't covered, Milo answers the rest and leaves that part to you. |
+| Suggest replies to me | Nothing automatic beyond keyword answers. Instead, Milo drafts a reply for you in the inbox. |
 
 Turn **Enabled** off to send nothing automatically.
 
-Whatever the mode, the assistant never changes a conversation's status and never marks it resolved. Only you, or the user, can close a conversation.
+Whatever the mode, Milo never changes a conversation's status and never marks it resolved. Only you, or the user, can close a conversation.
+
+Users see replies under the name you give Milo in **Name**. New projects start with "Milo".
+
+## Style
+
+**Style** sets how replies sound: **Tone** (friendly, neutral, or playful), **Length** (short or detailed), **Formality** (casual or formal), and **Emoji** (never or sometimes). Each starts at **Auto**, which follows the usual way support writes in the user's language. Changes apply to the next reply.
+
+## Other instructions
+
+Free text Milo follows on every reply: what to call your product, things it should never say, anything **Style** doesn't cover. Where they differ from **Style**, these win. Keep facts in your answers and use instructions for behavior.
 
 ## Handing over to you
 
-The assistant steps back and leaves the conversation to you when the user asks for a person, when nothing in your answers or sources covers the question, after answering only part of a message, or after its third reply. If it hasn't replied yet, the user gets the fallback message. If it has, it tells them in its own words that you'll take it from here. After that it stays quiet in the conversation, even if a later message is one it could answer.
+Milo steps back and leaves the conversation to you when the user asks for a person, when nothing in your answers or sources covers the question, after answering only part of a message, or after its third reply. If it hasn't replied yet, the user gets the fallback message. If it has, it tells them in its own words that you'll take it from here. After that it stays quiet in the conversation, even if a later message is one it could answer.
+
+When it hands over, Milo leaves you an internal note in the conversation: what the user wants, what's already known (their device, version, plan, what their screenshots show), what Milo told them, and what's still missing. The user never sees it. The note is written in the language your team replies in.
 
 ## Fallback message
 
 The fallback message goes out when a new conversation gets no answer, so the user knows they've been heard and roughly when to expect you. The default is a thank-you with a 24 to 48 hour expectation; change it to match your real response time. Leave it empty to send nothing.
 
-## AI instructions
+## What Milo did
 
-Free text the AI follows on every reply: the tone to use, what to call your product, things it should never say. Keep facts in your answers and use instructions for behavior.
+Under each of Milo's replies in a conversation, a one-line card says what it did and why: which answer it used, or what was missing that made it ask a question or hand the conversation to you. Open the card to see the answers and pages it drew on (**Based on** links the page), how it read the message, and whether the user found it helpful.
+
+The **Milo AI** page lists the past week or month: how many times Milo replied, what users said about the replies, the conversations it handed to you grouped by reason with an example of each, and any time it could not reach the AI service.
+
+Every Monday, everyone on the project also gets the same list by email. Turn it off under **Account → Notifications → Weekly Milo summary**.
+
+If the AI service doesn't respond, the user gets your fallback message, the conversation is left to you with a note saying why, and the week's list counts it.
 
 ## Was this helpful?
 
-After an assistant reply, the user sees a **Was this helpful?** prompt. Yes closes the conversation as resolved. No leaves it open and flags the reply in your inbox so you can step in. **Results** at the top of **Settings → Assistant** shows how often replies were sent, rated helpful, resolved, or handed over to you.
+After one of Milo's replies, the user sees a **Was this helpful?** prompt. Yes closes the conversation as resolved. No leaves it open and flags the reply in your inbox so you can step in.
 
 ## Learn from closed conversations
 
-When this is on, the assistant reads conversations you close and drafts new answers from them, listed under **Settings → Assistant → Suggestions** for you to review. Questions it could not answer at all are listed under **Unanswered**, each with a button to write the answer. Nothing becomes an answer until you approve it.
+When this is on, Milo reads conversations you close and drafts new answers from them, listed under **Settings → Milo AI → Suggestions** for you to review. Questions it could not answer at all are listed under **Unanswered**, each with a button to write the answer. Nothing becomes an answer until you approve it.
 
 ## Copilot
 
@@ -80,7 +98,7 @@ Next to every conversation, the **Copilot** tab has already read the thread, its
 
 ## Try it
 
-**Try it**, on the **Settings → Assistant** page, runs a message through the assistant exactly as a user would see it, with a topic, platform, and language of your choosing. It also lists the source passages it found for the message and marks the ones the reply used. Nothing is sent to anyone.
+**Try it**, on the **Milo AI** page, runs a message through Milo exactly as a user would see it, with a topic, platform, and language of your choosing. It also lists the source passages it found for the message and marks the ones the reply used. Nothing is sent to anyone.
 
 ## Availability
 
@@ -93,12 +111,12 @@ AI answers, sources, and the Copilot are available on paid plans. Pro includes 5
     What "Was this helpful?" does to a conversation's status.
   </Card>
   <Card title="Projects" href="/concepts/projects">
-    Where the assistant's settings live inside a project.
+    Where Milo's settings live inside a project.
   </Card>
   <Card title="Team" href="/concepts/team">
     Saved replies for the answers you'd rather send by hand.
   </Card>
   <Card title="Troubleshooting" href="/troubleshooting">
-    What to do when the assistant answered something it shouldn't have.
+    What to do when Milo answered something it shouldn't have.
   </Card>
 </CardGroup>
