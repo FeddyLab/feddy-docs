@@ -1,0 +1,60 @@
+---
+title: Requests
+description: What your users ask for, grouped by Milo, with how many asked and who to tell when it ships.
+---
+
+Users ask for the same things in different words, spread over weeks of conversations. **Requests** puts them in one list: each feature they want, each complaint, each bug they run into, with the number of people behind it.
+
+## How the list fills
+
+Milo reads every new conversation once, a couple of minutes after it starts, and decides whether the user is asking for something other users could want too:
+
+- **Feature**: add or change something, like a setting, a kind of content, or support for a device.
+- **Complaint**: unhappy with the price, how much is free, or how much content there is.
+- **Bug**: something in your app doesn't work or looks wrong.
+
+If one of your requests already covers it, the conversation is added there. Otherwise Milo starts a new one with a short name. Questions about how to do something, cancelling a subscription, refunds, and one person's account problems are not requests.
+
+When Requests first turns on, Milo also reads your conversations from the last 90 days, so the list isn't empty on day one.
+
+## The list
+
+**Requests** in the sidebar shows them with the most people first. For each one you see its kind, how many people asked, how many of them pay, and when someone last asked. The paying count comes from what your app reports with each message, such as `is_pro` or `plan` (see [Identify users](/guides/identify-users)). If your app reports nothing like that, the column doesn't appear.
+
+Open a request to see everyone who asked, each with the sentence they wrote and a link to the conversation. From there you can:
+
+- **Rename** it or change its kind.
+- **Merge** it into another request, when Milo filed the same thing twice.
+- Remove one conversation from it with **Not this request**.
+- **Delete** it, when it isn't something users want. The conversations stay in your inbox, and Milo doesn't file them again.
+
+In a conversation, the details panel shows the request it belongs to.
+
+## When it ships
+
+Click **Mark as shipped** on the request. A box appears for one message to everyone who asked. Each of them gets it as a new conversation in your app, plus an email if they have an address and your project has a verified sending domain. People who use your app in another language get it in theirs.
+
+Everyone is told once. If more people ask after you sent it, the box comes back for them.
+
+## Topics
+
+While it reads a conversation, Milo also checks the topic the user picked. Users often pick **Bug** for a question about their subscription. If the conversation belongs under another of your topics, Milo moves it there, and the details panel shows **User picked Bug** under the topic. A topic you changed by hand is never touched.
+
+## Weekly summary
+
+The Monday email lists new requests and the older ones people asked for again that week, with links. Projects where Milo only sends keyword answers get the email too when there are requests to report.
+
+## Availability
+
+Requests and topic sorting are available on paid plans. Milo's reading of your conversations doesn't count toward your plan's AI replies.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Conversations" href="/concepts/conversations">
+    Topics, statuses, and what comes with each conversation.
+  </Card>
+  <Card title="Milo" href="/concepts/assistant">
+    How Milo answers users and learns from your replies.
+  </Card>
+</CardGroup>

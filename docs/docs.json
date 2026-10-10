@@ -62,6 +62,7 @@
             "pages": [
               "concepts/projects",
               "concepts/conversations",
+              "concepts/requests",
               "concepts/contacts",
               "concepts/assistant",
               "concepts/team"
