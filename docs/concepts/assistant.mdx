@@ -3,7 +3,7 @@ title: Milo
 description: Milo, the AI that answers users from your answers and your docs, and the Copilot that drafts replies for you in the inbox.
 ---
 
-Milo is the AI in Feddy. It does two jobs. It answers users on its own, within limits you set, and it helps you write replies in the inbox. It never makes up facts about your product: everything it says to a user comes from answers you wrote or approved, or from the docs and text you added as sources.
+Milo is the AI in Feddy. It does two jobs. It answers users on its own, within limits you set, and it helps you write replies in the inbox. It never makes up facts about your product: everything it says to a user comes from your answers, which you write or it learns from your team's replies, or from the docs and text you added as sources.
 
 You'll use it to:
 
@@ -78,7 +78,7 @@ The fallback message goes out when a new conversation gets no answer, so the use
 
 Under each of Milo's replies in a conversation, a one-line card says what it did and why: which answer it used, or what was missing that made it ask a question or hand the conversation to you. Open the card to see the answers and pages it drew on (**Based on** links the page), how it read the message, and whether the user found it helpful.
 
-The **Milo AI** page lists the past week or month: how many times Milo replied, what users said about the replies, the conversations it handed to you grouped by reason with an example of each, and any time it could not reach the AI service.
+The **Milo AI** page lists the past week or month: how many times Milo replied, what users said about the replies, the conversations it handed to you grouped by reason with an example of each, any time it could not reach the AI service, and what it learned from your replies.
 
 Every Monday, everyone on the project also gets the same list by email. Turn it off under **Account → Notifications → Weekly Milo summary**.
 
@@ -88,9 +88,18 @@ If the AI service doesn't respond, the user gets your fallback message, the conv
 
 After one of Milo's replies, the user sees a **Was this helpful?** prompt. Yes closes the conversation as resolved. No leaves it open and flags the reply in your inbox so you can step in.
 
-## Learn from closed conversations
+## Learn from your replies
 
-When this is on, Milo reads conversations you close and drafts new answers from them, listed under **Settings → Milo AI → Suggestions** for you to review. Questions it could not answer at all are listed under **Unanswered**, each with a button to write the answer. Nothing becomes an answer until you approve it.
+When this is on, which it is by default, Milo reads what your team replies to users and keeps what the next user asking the same thing should hear. It saves it to your answers and uses it right away. There is nothing to review.
+
+- It learns only what holds for everyone. A refund you granted or "it works now" stays with that one user.
+- It keeps your steps and conditions as you wrote them, and doesn't turn them into a yes or a no.
+- When your team's answer changes, it updates the answer it already has instead of adding a second one. Your newest reply wins, also over an answer you wrote by hand, unless you edited that answer after the reply.
+- Something temporary, like an outage or a workaround until your next release, stops being used after two weeks, or from the app version you said fixes it.
+
+Learned answers are marked **Learned** in your answers list. Each answer page has a history of every change, and any earlier version can be restored. In a conversation, Milo's card shows which answers a reply used; next to one it learned, **Undo** takes back its latest change. Editing a learned answer makes it yours.
+
+Questions Milo couldn't answer, and hasn't learned an answer for since, are listed under **Unanswered**, each with a button to write the answer.
 
 ## Copilot
 
