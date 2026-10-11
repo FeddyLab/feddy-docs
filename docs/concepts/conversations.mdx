@@ -49,8 +49,10 @@ On paid plans, Milo reads each new conversation and moves it to the right topic 
 
 The SDK sends along what it can see about the user's setup, and the inbox shows it beside the thread:
 
-- **iOS**: device model, iOS version, app version and build, and the device language.
-- **Web**: the page they were on, browser, operating system, window size, where they came from, and the browser language.
+- **iOS**: device model, iOS version, app version and build, the device language, and the time zone.
+- **Web**: the page they were on, browser, operating system, window size, where they came from, the browser language, and the time zone.
+
+From the time zone, the inbox shows what time it is for the user right now, so you know when it's the middle of the night for them. It needs iOS SDK 0.8.2 or later.
 
 If you've told Feddy who the user is, their name and details appear here too. See [Contacts](/concepts/contacts).
 

@@ -26,7 +26,7 @@ When someone logs in to your app, call `identify` with your own user ID for them
 
 The **Details** panel next to a conversation shows two kinds of facts:
 
-- **Collected by the SDK**: device, operating system, app version, language, and when they were first and last seen. You don't send any of this.
+- **Collected by the SDK**: device, operating system, app version, language, time zone, and when they were first and last seen. You don't send any of this.
 - **Sent by you with `identify`**: whatever you chose to include, such as their plan or membership status. Feddy calls these attributes.
 
 **Settings → Data attributes** lists every attribute you've ever sent. Feddy works out whether each one is text, a number, or a date. From there you can give an attribute a friendlier label, show it as a column in the inbox, or make it something you can filter by. A new attribute appears in the list on its own the first time the SDK sends it.
