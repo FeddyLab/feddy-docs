@@ -72,7 +72,8 @@
             "group": "Guides",
             "pages": [
               "guides/identify-users",
-              "guides/unread-badge"
+              "guides/unread-badge",
+              "guides/mcp"
             ]
           }
         ]

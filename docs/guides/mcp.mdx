@@ -1,0 +1,89 @@
+---
+title: Use Feddy from your AI assistant
+description: Connect Claude Code, Cursor, or Codex to your inbox over MCP, then read, reply, and change how Milo answers by asking.
+---
+
+Feddy runs an MCP server. Connect your AI assistant to it and you can work your inbox in plain language:
+
+- "What came in today? Reply to the easy ones."
+- "From now on, politely turn down anyone asking for a student discount."
+- "Save what I just told #118 as an answer."
+- "What are people asking for most this month?"
+
+Your assistant asks before it does anything, and nothing reaches your users unless you approve the reply.
+
+## Create a token
+
+1. In the dashboard, open your avatar menu → **My profile** → **MCP**.
+2. Click **Create token** and give it a name you'll recognize later, like "Claude Code on my laptop".
+3. Copy the token. It's shown once.
+
+A token can do what you can do in your team, in the projects you can see. Revoke it from the same page and it stops working right away.
+
+<Warning>
+Treat the token like a password. Keep it out of code you commit.
+</Warning>
+
+## Connect your assistant
+
+The server address is `https://core.feddy.app/mcp`.
+
+<Tabs>
+  <Tab title="Claude Code">
+    ```bash
+    claude mcp add --transport http feddy https://core.feddy.app/mcp \
+      --header "Authorization: Bearer YOUR_TOKEN"
+    ```
+
+    Start a new session and type `/mcp`. Feddy should show as connected.
+  </Tab>
+  <Tab title="Cursor">
+    Add this to `~/.cursor/mcp.json`, and set `FEDDY_TOKEN` in your environment:
+
+    ```json
+    {
+      "mcpServers": {
+        "feddy": {
+          "url": "https://core.feddy.app/mcp",
+          "headers": {
+            "Authorization": "Bearer ${env:FEDDY_TOKEN}"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Codex">
+    Add this to `~/.codex/config.toml`, and set `FEDDY_TOKEN` in your environment:
+
+    ```toml
+    [mcp_servers.feddy]
+    url = "https://core.feddy.app/mcp"
+    bearer_token_env_var = "FEDDY_TOKEN"
+    ```
+  </Tab>
+</Tabs>
+
+Any other assistant that can connect to a remote MCP server with a header works the same way.
+
+## What it can do
+
+| Tool | What it does |
+|---|---|
+| `list_projects` | Lists your projects |
+| `list_conversations` | Lists conversations, filtered by project, status, unread, or text |
+| `get_conversation` | Reads a whole conversation by number (`#118`) or ID, with who the user is and the device they wrote from |
+| `reply` | Sends a reply to the user, optionally translated into their language |
+| `add_note` | Adds a note only your team sees |
+| `update_conversation` | Closes or reopens a conversation, or changes its topic |
+| `find_contacts`, `get_contact` | Finds users by name, email, or the details your app sends |
+| `list_answers`, `create_answer`, `update_answer` | Reads and edits the answers Milo replies from |
+| `get_milo`, `update_milo` | Reads and changes Milo's instructions and mode |
+| `list_requests`, `get_request` | Reads the feature requests and bugs Milo grouped from conversations |
+| `list_unanswered` | Lists the questions Milo couldn't answer |
+
+Your plan applies the same way it does in the dashboard. For example, translated replies need a paid plan.
+
+## Teach Milo by telling your assistant
+
+When you say how support should work from now on, your assistant updates Milo's instructions. When you state a fact users ask about, it saves an answer. Both take effect on Milo's next reply. To check what changed, open **Settings → Milo AI** in the dashboard, or ask your assistant to show Milo's settings.
