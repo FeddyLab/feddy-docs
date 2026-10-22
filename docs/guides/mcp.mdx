@@ -1,6 +1,6 @@
 ---
 title: Use Feddy from your AI assistant
-description: Connect Claude Code, Cursor, or Codex to your inbox over MCP, then read, reply, and change how Milo answers by asking.
+description: Connect Claude, Cursor, ChatGPT, or Codex to your inbox over MCP, then read, reply, and change how Milo answers by asking.
 ---
 
 Feddy runs an MCP server. Connect your AI assistant to it and you can work your inbox in plain language:
@@ -10,61 +10,76 @@ Feddy runs an MCP server. Connect your AI assistant to it and you can work your 
 - "Save what I just told #118 as an answer."
 - "What are people asking for most this month?"
 
-Your assistant asks before it does anything, and nothing reaches your users unless you approve the reply.
-
-## Create a token
-
-1. In the dashboard, open your avatar menu → **My profile** → **MCP**.
-2. Click **Create token** and give it a name you'll recognize later, like "Claude Code on my laptop".
-3. Copy the token. It's shown once.
-
-A token can do what you can do in your team, in the projects you can see. Revoke it from the same page and it stops working right away.
-
-<Warning>
-Treat the token like a password. Keep it out of code you commit.
-</Warning>
-
 ## Connect your assistant
 
-The server address is `https://core.feddy.app/mcp`.
+Add this address to your assistant:
+
+```
+https://core.feddy.app/mcp
+```
+
+Your browser then opens a Feddy page asking you to approve the connection. There's nothing to copy and no key to keep safe.
 
 <Tabs>
   <Tab title="Claude Code">
     ```bash
-    claude mcp add --transport http feddy https://core.feddy.app/mcp \
-      --header "Authorization: Bearer YOUR_TOKEN"
+    claude mcp add --transport http feddy https://core.feddy.app/mcp
     ```
 
-    Start a new session and type `/mcp`. Feddy should show as connected.
+    Start a session, type `/mcp`, select **feddy**, and choose **Authenticate**.
+  </Tab>
+  <Tab title="Claude">
+    On claude.ai or in the Claude desktop app, open **Settings → Connectors**, click **Add custom connector**, and paste the address.
+
+    On Team and Enterprise plans, an owner adds the connector for the organization first. Each member then clicks **Connect**.
   </Tab>
   <Tab title="Cursor">
-    Add this to `~/.cursor/mcp.json`, and set `FEDDY_TOKEN` in your environment:
+    Add this to `~/.cursor/mcp.json`:
 
     ```json
     {
       "mcpServers": {
         "feddy": {
-          "url": "https://core.feddy.app/mcp",
-          "headers": {
-            "Authorization": "Bearer ${env:FEDDY_TOKEN}"
-          }
+          "url": "https://core.feddy.app/mcp"
         }
       }
     }
     ```
+
+    Cursor asks you to sign in the first time it connects.
+  </Tab>
+  <Tab title="ChatGPT">
+    In ChatGPT's connector settings, turn on developer mode, create a connector with the address, and choose OAuth as the authentication.
   </Tab>
   <Tab title="Codex">
-    Add this to `~/.codex/config.toml`, and set `FEDDY_TOKEN` in your environment:
-
-    ```toml
-    [mcp_servers.feddy]
-    url = "https://core.feddy.app/mcp"
-    bearer_token_env_var = "FEDDY_TOKEN"
+    ```bash
+    codex mcp add feddy --url https://core.feddy.app/mcp
+    codex mcp login feddy
     ```
   </Tab>
 </Tabs>
 
-Any other assistant that can connect to a remote MCP server with a header works the same way.
+Any other assistant that can connect to a remote MCP server with OAuth works the same way.
+
+## Choose what it can do
+
+The approval page shows which app is asking, which team it will work in, and where it sends you back afterwards. Your assistant can always read your conversations, users, and Milo's settings. Tick what else it can do:
+
+| Permission | What it allows |
+|---|---|
+| **Reply to users** | Sends messages your users receive. Off unless you tick it. |
+| **Handle conversations** | Adds notes your team sees, closes and reopens conversations, changes topics. |
+| **Manage Milo** | Changes Milo's instructions and answers. |
+
+Anything you leave unticked doesn't exist for that assistant. If it can't reply, it drafts the reply for you to send from the dashboard instead.
+
+To change permissions later, disconnect the app and connect it again.
+
+## See and disconnect apps
+
+Open your avatar menu → **My profile** → **MCP**. Every connected app is listed with its permissions and when it was last used. **Disconnect** cuts it off right away.
+
+The connection acts as you, in the projects you can see. It stops working if you leave the team or reset your password.
 
 ## What it can do
 
