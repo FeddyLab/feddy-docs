@@ -78,6 +78,20 @@ Asks for a fresh unread count right now instead of waiting for the next schedule
 
 A function Feddy calls, on the main thread, whenever the unread count changes. Meant for UIKit badges; SwiftUI apps should use the helpers below instead.
 
+## `Feddy.replyPopupsEnabled`
+
+```swift
+@MainActor static var replyPopupsEnabled: Bool
+```
+
+Whether a card slides in at the top of the screen when the user comes back with a reply they haven't seen. On by default. Set it to `false` before a screen that must not be interrupted, such as a paywall or a game level, and back to `true` afterwards; a waiting reply then shows.
+
+```swift
+Feddy.replyPopupsEnabled = false
+// show the paywall
+Feddy.replyPopupsEnabled = true
+```
+
 ## `View.feddyUnreadBadge()`
 
 ```swift
@@ -116,5 +130,6 @@ The unread count as an observable object, for custom SwiftUI badges. A view that
 - **Identity**: the first time the SDK runs, it creates an anonymous ID and stores it in the Keychain, so a user's history survives reinstalls.
 - **Language**: the sheet ships in English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, French, Spanish, Brazilian Portuguese, and Russian, and follows the device language. Other languages fall back to English. Text you write in the dashboard, such as topics, is translated on the server according to your project settings.
 - **Attachments**: up to 5 images per message, resized so the longest edge is 3000 px before upload. The picker needs iOS 16; on iOS 15 the attachment row isn't shown.
+- **Reply popups**: when the app becomes active with a reply the user hasn't seen, a card with the latest message slides in at the top of the screen after about two seconds. Tapping it opens the conversation; if several are waiting, it says how many and opens the home screen. Swiping up or the close button dismisses it, and it goes away on its own after 8 seconds (it stays while VoiceOver is on). Each reply shows at most once, only replies from the last 14 days, and never while the Feddy sheet is open. The SDK draws it over your screen; it isn't a notification and needs no permission.
 - **Branding**: the name, accent color, and logo users see come from the dashboard, not from code.
 - **Privacy manifest**: the package ships a `PrivacyInfo.xcprivacy` that declares what the SDK collects, so there's nothing for you to add for App Store review.

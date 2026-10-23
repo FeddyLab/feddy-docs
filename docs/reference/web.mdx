@@ -25,6 +25,7 @@ Sets the widget up on the page. It only takes effect once per page load; later c
 | `apiUrl` | `string` | `https://core.feddy.app` | Point at a local server during development. |
 | `launcher` | `boolean` | `true` | Show the floating chat button bottom-right. Set `false` to open the panel from your own element instead. |
 | `sounds` | `boolean` | `true` | Play a chime when a reply arrives. |
+| `replyPopups` | `boolean` | `true` | Show a card above the floating button when a reply the visitor hasn't seen is waiting. Set `false` to rely on the badge alone. |
 | `locale` | `string` | `navigator.language` | Force a language with a code such as `'ja'` or `'zh-TW'`. |
 
 ## `Feddy.identify(options)`
@@ -74,4 +75,5 @@ A function the widget calls whenever the unread count changes. The widget checks
 - **Attachments**: up to 5 images per message, 10 MB each before resizing. The browser resizes them so the longest edge is 2000 px and converts them to WebP before upload.
 - **Screenshots**: a camera button in the message box attaches a picture of the page as the visitor sees it, with the widget itself left out. It's made in the browser with no permission prompt. Images from other sites, videos, and embedded frames show as grey boxes, and web fonts fall back to system fonts, which is enough to show which screen and what state. The button is hidden when attachments aren't available on your plan.
 - **Branding**: the name, accent color, and logo users see come from the dashboard. The accent color is applied as `--fd-accent` inside the shadow root, and the widget picks a readable text color to go with it.
+- **Reply popups**: when a reply the visitor hasn't seen is waiting, a card appears above the floating button with the latest message. Clicking it opens the conversation; if several are waiting, it says how many and opens the list. Each reply shows at most once per browser, only replies from the last 14 days, and never while the panel is open. It checks shortly after the page loads, when the tab becomes visible again, and when a new reply arrives.
 - **Floating button**: fixed bottom-right, 56 px, with an unread count badge. Its `z-index` is `2147483000`, so it sits above everything on the page.

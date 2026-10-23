@@ -81,9 +81,15 @@ Feddy.onUnreadCountChanged = (count) => {
 }
 ```
 
+## Reply popups
+
+A badge only helps if the user looks at where you put it. So when someone comes back to your app with a reply they haven't seen, Feddy also shows a card with the latest message, at the top of the screen on iOS and above the floating button on the web. Tapping it opens the conversation.
+
+Each reply pops up at most once, and only replies from the last 14 days do. After that the badge is the only signal. Turn popups off with `Feddy.replyPopupsEnabled = false` on iOS (for example while a paywall is up) or `replyPopups: false` in `Feddy.init` on the web.
+
 ## What counts as unread
 
-A reply is unread until the user opens the conversation it belongs to. Opening Feddy isn't enough on its own. Replies in closed conversations never count.
+A reply is unread until the user opens the conversation it belongs to. Opening Feddy isn't enough on its own. Replies in closed conversations count too: closing a conversation doesn't mean the user has read your reply.
 
 <Check>
 Send a message from a test build, reply from the inbox, and watch the badge show `1`. Open the conversation in the app and it goes away.
