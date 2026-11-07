@@ -1,0 +1,105 @@
+---
+title: Android Views
+description: Add Feddy to an Android app built with Views or Java, from Maven Central, and send your first message.
+---
+
+By the end of this page your app will have a Support button that opens Feddy, and a message sent from it will be sitting in your inbox. It takes about five minutes.
+
+Feddy's own screens are built with Jetpack Compose, but they run in an activity of the SDK's own, so your app doesn't need to use Compose, AppCompat, or any particular activity class. Everything below works the same from Java.
+
+## Before you start
+
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- An app that compiles against API 35 or later. The SDK runs on Android 6.0 (API 23) and up, and its only dependencies are Google's own AndroidX libraries and kotlinx-coroutines.
+
+<Steps>
+<Step title="Add the dependency">
+
+In your app module's `build.gradle.kts`:
+
+```kotlin build.gradle.kts
+dependencies {
+    implementation("app.feddy:feddy:0.1.0")
+}
+```
+
+With a Groovy `build.gradle`, write `implementation 'app.feddy:feddy:0.1.0'`. It comes from Maven Central, which new Android projects already list under `repositories`. There are no permissions to add.
+</Step>
+<Step title="Tell Feddy which project this is">
+
+Do this once, when the app starts, before anything else can open Feddy. Calling it again later does nothing.
+
+```kotlin MyApplication.kt
+import android.app.Application
+import app.feddy.sdk.Feddy
+
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        Feddy.configure(this, projectId = "fd_XXXXXXXXXXXXXXXX")
+    }
+}
+```
+
+From Java, the same call is `Feddy.configure(this, "fd_XXXXXXXXXXXXXXXX");`. If your app doesn't have an `Application` class yet, add one and register it in `AndroidManifest.xml` with `android:name=".MyApplication"` on the `<application>` element.
+
+<Note>
+**The project ID isn't a secret.** It's built into your app, so anyone who downloads the app can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it to your repository like any other setting. There's nothing to protect, so keep it out of `local.properties` and your secrets.
+</Note>
+</Step>
+<Step title="Give users a way in">
+
+Call `present()` from wherever users go looking for help. For most apps that's a row in Settings or a toolbar button. Feddy opens full screen on its home: a greeting, a button to send a new message, and the user's recent conversations. Back closes it.
+
+```kotlin SettingsActivity.kt
+helpRow.setOnClickListener { Feddy.present(it.context) }
+```
+
+To show a count on that row when a reply is waiting, give Feddy a listener. It runs on the main thread, so you can update views directly. Remove it when the screen goes away:
+
+```kotlin SettingsActivity.kt
+private val unreadListener = FeddyUnreadListener { count ->
+    helpBadge.isVisible = count > 0
+    helpBadge.text = count.toString()
+}
+
+override fun onStart() {
+    super.onStart()
+    Feddy.addUnreadCountListener(unreadListener)
+    Feddy.unreadCount(unreadListener)   // the current count, right away
+}
+
+override fun onStop() {
+    Feddy.removeUnreadCountListener(unreadListener)
+    super.onStop()
+}
+```
+</Step>
+<Step title="Send yourself a message">
+
+Run the app, tap the row, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the device model and app version alongside.
+
+Reply from the inbox. Back in the app, the reply appears in the conversation, and the row shows a `1` until the user opens it.
+
+<Check>
+That's the whole loop: a user writes in, you answer, and the answer reaches them inside the app.
+</Check>
+</Step>
+</Steps>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Other places to show the count, and when it refreshes.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="Android SDK reference" href="/reference/android">
+    Every call in the library, with its signature and what it does.
+  </Card>
+</CardGroup>

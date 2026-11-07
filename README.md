@@ -10,7 +10,7 @@
 Source for the developer documentation published at https://feddy.app/docs.
 
 - `docs/getting-started` — create a project, set up with an AI agent
-- `docs/quickstart` — one page per platform: SwiftUI, UIKit, JavaScript, React, Vue, Svelte, Next.js, Astro, WordPress, Webflow
+- `docs/quickstart` — one page per platform: SwiftUI, UIKit, Jetpack Compose, Android Views, JavaScript, React, Vue, Svelte, Next.js, Astro, WordPress, Webflow
 - `docs/concepts` — projects, conversations, contacts, the assistant, your team
 - `docs/guides` — identifying users, unread badges
 - `docs/reference` — the full public API of each SDK

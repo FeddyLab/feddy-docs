@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Feddy",
-  "description": "In-app customer support for iOS apps and websites.",
+  "description": "In-app customer support for iOS and Android apps and websites.",
   "colors": {
     "primary": "#121212",
     "light": "#121212",
@@ -40,6 +40,13 @@
                 "pages": [
                   "quickstart/ios/swiftui",
                   "quickstart/ios/uikit"
+                ]
+              },
+              {
+                "group": "Android",
+                "pages": [
+                  "quickstart/android/compose",
+                  "quickstart/android/views"
                 ]
               },
               {
@@ -86,6 +93,7 @@
             "group": "Reference",
             "pages": [
               "reference/ios",
+              "reference/android",
               "reference/web"
             ]
           },
@@ -138,6 +146,10 @@
     {
       "source": "/quickstart/ios",
       "destination": "/quickstart/ios/swiftui"
+    },
+    {
+      "source": "/quickstart/android",
+      "destination": "/quickstart/android/compose"
     },
     {
       "source": "/quickstart/web",

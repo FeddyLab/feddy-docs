@@ -19,6 +19,14 @@ Feddy.identify(
 )
 ```
 
+```kotlin
+Feddy.identify(
+    userId = user.id,
+    email = user.email,
+    attributes = mapOf("plan" to user.plan, "is_member" to user.isMember, "renews_at" to user.renewsAt),
+)
+```
+
 ```js
 Feddy.identify({
   userId: user.id,
@@ -158,6 +166,9 @@ Log in on a test build, send a message, and open the inbox. The conversation sho
   </Card>
   <Card title="iOS SDK reference" href="/reference/ios">
     The full `identify` signature for Swift.
+  </Card>
+  <Card title="Android SDK reference" href="/reference/android">
+    The full `identify` signature for Kotlin and Java.
   </Card>
   <Card title="Web SDK reference" href="/reference/web">
     The full `identify` options for the web widget.

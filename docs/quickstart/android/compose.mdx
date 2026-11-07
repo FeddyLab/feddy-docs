@@ -1,0 +1,104 @@
+---
+title: Jetpack Compose
+description: Add Feddy to a Jetpack Compose app from Maven Central and send your first message.
+---
+
+By the end of this page your app will have a Support row that opens Feddy, and a message sent from it will be sitting in your inbox. It takes about five minutes.
+
+## Before you start
+
+- A Feddy project and its project ID. You'll find the ID under **Settings → Install** in the dashboard. No project yet? [Create one](/getting-started/create-a-project) first.
+- An app that compiles against API 35 or later. The SDK runs on Android 6.0 (API 23) and up, and its only dependencies are Google's own AndroidX libraries and kotlinx-coroutines.
+
+<Steps>
+<Step title="Add the dependency">
+
+In your app module's `build.gradle.kts`:
+
+```kotlin build.gradle.kts
+dependencies {
+    implementation("app.feddy:feddy:0.1.0")
+}
+```
+
+It comes from Maven Central, which new Android projects already list under `repositories`. There are no permissions to add: the SDK's own manifest declares `INTERNET`, and the photo picker it uses needs none.
+</Step>
+<Step title="Tell Feddy which project this is">
+
+Do this once, when the app starts, before anything else can open Feddy. Calling it again later does nothing. `Application.onCreate` is the place:
+
+```kotlin MyApplication.kt
+import android.app.Application
+import app.feddy.sdk.Feddy
+
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        Feddy.configure(this, projectId = "fd_XXXXXXXXXXXXXXXX")
+    }
+}
+```
+
+If your app doesn't have an `Application` class yet, add this one and register it in `AndroidManifest.xml` with `android:name=".MyApplication"` on the `<application>` element.
+
+<Note>
+**The project ID isn't a secret.** It's built into your app, so anyone who downloads the app can find it, and that's fine: it only tells Feddy which inbox a message belongs to. Commit it to your repository like any other setting. There's nothing to protect, so keep it out of `local.properties` and your secrets.
+</Note>
+</Step>
+<Step title="Give users a way in">
+
+Add a row wherever users already go looking for help. For most apps that's Settings:
+
+```kotlin SettingsScreen.kt
+import app.feddy.sdk.Feddy
+import app.feddy.sdk.FeddyUnreadDot
+
+@Composable
+fun SupportRow() {
+    val context = LocalContext.current
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clickable { Feddy.present(context) }
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text("Support")
+        Spacer(Modifier.weight(1f))
+        FeddyUnreadDot(showsCount = true)
+    }
+}
+```
+
+`present()` opens Feddy full screen, in an activity of its own, on its home: a greeting, a button to send a new message, and the user's recent conversations. The system back gesture closes it. If you'd rather skip straight to the new-message screen, call `presentNewConversation()` instead.
+
+`FeddyUnreadDot` shows a count when a reply is waiting and draws nothing when there's nothing unread.
+</Step>
+<Step title="Send yourself a message">
+
+Run the app, tap the row, and send a message. Then open your inbox at [dash.feddy.app](https://dash.feddy.app): it's there, with the device model and app version alongside.
+
+Reply from the inbox. Back in the app, the reply appears in the conversation, and the Support row shows a `1` until the user opens it.
+
+<Check>
+That's the whole loop: a user writes in, you answer, and the answer reaches them inside the app.
+</Check>
+</Step>
+</Steps>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Identify users" href="/guides/identify-users">
+    Tell Feddy who's logged in, so you see their name in the inbox and replies can reach them by email.
+  </Card>
+  <Card title="Unread badge" href="/guides/unread-badge">
+    Put the count on a navigation bar item, a custom row, or anywhere else.
+  </Card>
+  <Card title="Conversations" href="/concepts/conversations">
+    What you're looking at in the inbox, and what happens on its own.
+  </Card>
+  <Card title="Android SDK reference" href="/reference/android">
+    Every call in the library, with its signature and what it does.
+  </Card>
+</CardGroup>

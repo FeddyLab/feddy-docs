@@ -1,0 +1,127 @@
+---
+title: Android SDK reference
+description: Every public call in the Feddy Android library, with its signature and what it does.
+---
+
+The library gives you one object, `Feddy`, a listener interface, and a Compose marker for the unread count. Everything else is internal, so this page is the complete list of what you can call. Every method is annotated `@JvmStatic`, so Java calls them the same way: `Feddy.present(this)`.
+
+Requirements: Android 6.0 (API 23) or later, an app compiling against API 35 or later. Coordinates `app.feddy:feddy` on Maven Central, package `app.feddy.sdk`. Source at [FeddyLab/feddy-android](https://github.com/FeddyLab/feddy-android).
+
+## `Feddy.configure(context, projectId, apiUrl)`
+
+```kotlin
+fun configure(context: Context, projectId: String, apiUrl: String = "https://core.feddy.app")
+```
+
+Sets Feddy up for this app. Call it once, as early as you can (`Application.onCreate` is ideal); later calls do nothing. It starts loading your project's settings and the unread count, and from then on checks for new replies every 30 seconds while the app is in the foreground.
+
+- `context`: any context. The SDK keeps only the application context.
+- `projectId`: copied from **Settings → Install** in the dashboard. Public by design; see [Create a project](/getting-started/create-a-project).
+- `apiUrl`: leave the default in production. Point it at a local server during development; from the Android emulator, your computer is `http://10.0.2.2`.
+
+## `Feddy.present(context)`
+
+```kotlin
+fun present(context: Context)
+```
+
+Opens Feddy full screen, in an activity of the SDK's own, on its home: a greeting, a button to send a new message, and the user's recent conversations, with a link to all of them. Back closes it. Any context works, including the application context and a plain `Activity` that isn't AppCompat or Compose, so the call is the same from Compose, Views, Flutter, or React Native hosts. If called before `configure`, it logs `present() called before configure()` under the `Feddy` tag and does nothing.
+
+## `Feddy.presentNewConversation(context)`
+
+```kotlin
+fun presentNewConversation(context: Context)
+```
+
+Same as `present()`, but opens straight onto the new-message screen.
+
+## `Feddy.identify(userId, email, name, avatarUrl, attributes)`
+
+```kotlin
+fun identify(
+    userId: String,
+    email: String? = null,
+    name: String? = null,
+    avatarUrl: String? = null,
+    attributes: Map<String, Any?> = emptyMap(),
+)
+```
+
+Tells Feddy which of your users is on this device. Call it after login and whenever the details you send change; it's safe to call as often as you like, and calls take effect in the order you make them. Does nothing before `configure`. What happens on the server, including how records from different devices merge, is in [Identify users](/guides/identify-users).
+
+- `userId`: your own stable ID for the user, 1 to 128 characters.
+- `email`: optional. Lets replies reach the user by email once your project has a verified email domain.
+- `name`: optional. Shown in the inbox.
+- `avatarUrl`: optional. An `http(s)` URL of a picture you already have of the user, shown in the inbox. Anything else is ignored.
+- `attributes`: optional facts about the user, such as their plan. Values may be `String`, `Boolean`, any number, or `java.util.Date`; a `Date` is sent as text like `2026-09-22T10:00:00Z`. Other types are dropped on the device. Each call replaces the whole set. Server-side limits are listed in [Identify users](/guides/identify-users).
+
+## `Feddy.unreadCount(callback)`
+
+```kotlin
+fun unreadCount(callback: FeddyUnreadListener)
+```
+
+Fetches the current number of unread replies and hands it to `callback` on the main thread.
+
+## `Feddy.refresh()`
+
+```kotlin
+fun refresh()
+```
+
+Asks for a fresh unread count right now instead of waiting for the next scheduled check. The SDK already does this whenever the app comes to the foreground; call it after anything in your app that should show a fresh count at once.
+
+## `Feddy.addUnreadCountListener(listener)` and `removeUnreadCountListener(listener)`
+
+```kotlin
+fun interface FeddyUnreadListener {
+    fun onUnreadCountChanged(count: Int)
+}
+
+fun addUnreadCountListener(listener: FeddyUnreadListener)
+fun removeUnreadCountListener(listener: FeddyUnreadListener)
+```
+
+Feddy calls each listener on the main thread whenever the unread count changes. Meant for badges drawn with Views; adding a listener doesn't call it with the current count, so pair it with `unreadCount(listener)`. Remove it when its screen goes away, for example in `onStop`.
+
+## `Feddy.unreadCountFlow`
+
+```kotlin
+val unreadCountFlow: StateFlow<Int>
+```
+
+The unread count as a flow, for Kotlin callers. In Compose, `val unread by Feddy.unreadCountFlow.collectAsState()` recomposes whenever the count changes.
+
+## `Feddy.replyPopupsEnabled`
+
+```kotlin
+var replyPopupsEnabled: Boolean
+```
+
+Whether a card slides in at the top of the screen when the user comes back with a reply they haven't seen. On by default. Set it to `false` before a screen that must not be interrupted, such as a paywall or a game level, and back to `true` afterwards; a waiting reply then shows. Set it from the main thread.
+
+```kotlin
+Feddy.replyPopupsEnabled = false
+// show the paywall
+Feddy.replyPopupsEnabled = true
+```
+
+## `FeddyUnreadDot`
+
+```kotlin
+@Composable
+fun FeddyUnreadDot(modifier: Modifier = Modifier, showsCount: Boolean = false)
+```
+
+A red marker you place in your own Compose row. Renders nothing at zero, so it can sit in the row unconditionally. Pass `showsCount = true` to draw the number inside the marker.
+
+## What happens on its own
+
+- **Identity**: the first time the SDK runs, it creates an anonymous ID and stores it in the SDK's own preferences file. Android Auto Backup, which is on by default, restores it after a reinstall along with the user's history; if your app turns backup off, a reinstall starts a new anonymous contact.
+- **Language**: the screens ship in English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, French, Spanish, Brazilian Portuguese, and Russian, and follow the device language. Other languages fall back to English. Text you write in the dashboard, such as topics, is translated on the server according to your project settings.
+- **Theme**: the screens follow the system's light or dark setting and, on Android 12 and later, the device's dynamic colors. Your accent color from the dashboard is used for the main button and highlights.
+- **Attachments**: up to 5 images per message, chosen with the system photo picker, which needs no storage permission. Each is resized so the longest edge is 3000 px and re-encoded as JPEG before upload.
+- **Reply popups**: when the app comes to the foreground with a reply the user hasn't seen, a card slides in at the top of the screen after about two seconds, saying who replied and showing the first two lines of the latest reply. Tapping it opens that conversation. Swiping up dismisses it, and it goes away on its own after 8 seconds (it stays while TalkBack is on, with a Close action). If several replies are waiting, only the newest shows. Each reply shows at most once, only replies from the last 14 days, and never while Feddy's screens are open. The SDK draws it over your current screen; it isn't a notification and needs no permission.
+- **Branding**: the name, accent color, and logo users see come from the dashboard, not from code.
+- **Shrinking**: the library ships its own R8 rules, so nothing needs adding to your `proguard-rules.pro`.
+- **Google Play data safety**: the SDK collects user IDs, email addresses (optional), messages, and photos (optional) for app functionality. None of it is shared or used for tracking, and all of it is encrypted in transit.

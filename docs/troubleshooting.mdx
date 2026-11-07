@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: What to check when Feddy doesn't behave as expected, on iOS, on the web, and in the inbox.
+description: What to check when Feddy doesn't behave as expected, on iOS, on Android, on the web, and in the inbox.
 ---
 
 Most problems come down to one of a few things: Feddy hasn't been set up yet when something tries to open it, the project ID doesn't match, or a feature needs a setting that isn't on. Find your symptom below.
@@ -32,6 +32,36 @@ Most problems come down to one of a few things: Feddy hasn't been set up yet whe
     **Another possible cause:** Attachments are a paid-plan feature.
 
     Only PNG, JPEG, and WebP images are accepted, up to 5 per message.
+  </Accordion>
+</AccordionGroup>
+
+## Android
+
+<AccordionGroup>
+  <Accordion title="Nothing happens when I call present()">
+    **Possible cause:** `configure` hasn't run yet. Logcat shows `present() called before configure()` under the `Feddy` tag.
+
+    **Solution:** Call `Feddy.configure` in your `Application.onCreate`, and check that the `Application` class is registered with `android:name` in `AndroidManifest.xml`. Without that registration, `onCreate` never runs.
+  </Accordion>
+
+  <Accordion title="The build fails after adding the dependency">
+    **Possible cause:** Your app compiles against an API level below 35. The SDK's AndroidX dependencies need `compileSdk = 35` or later, and Gradle's AAR metadata check stops the build with a message naming the minimum.
+
+    **Solution:** Raise `compileSdk` in your app module. This doesn't change which devices can install the app; that's `minSdk`, and the SDK supports 23 and up.
+  </Accordion>
+
+  <Accordion title="The unread badge doesn't update">
+    **Possible cause:** A listener added with `addUnreadCountListener` only hears about changes, so a badge drawn from it starts empty.
+
+    **Solution:** Call `Feddy.unreadCount(listener)` once when the screen starts, as well as adding the listener. In Compose, use `FeddyUnreadDot` or `Feddy.unreadCountFlow`, which always start from the current count. See [Unread badge](/guides/unread-badge).
+
+    Also keep in mind that only opening a conversation clears its count. Opening Feddy doesn't.
+  </Accordion>
+
+  <Accordion title="Nothing arrives from the emulator during development">
+    **Possible cause:** `apiUrl` points at `localhost`, which inside the emulator is the emulator itself.
+
+    **Solution:** Use `http://10.0.2.2:<port>` to reach your computer. Plain `http` also needs `android:usesCleartextTraffic="true"` in a debug manifest; production builds should leave `apiUrl` at its default.
   </Accordion>
 </AccordionGroup>
 
@@ -73,13 +103,13 @@ Most problems come down to one of a few things: Feddy hasn't been set up yet whe
 
     **Another possible cause:** You're looking at a different project. Check the project picker in the dashboard sidebar.
 
-    **Another possible cause:** A development build is still pointed at a local server through `apiUrl` (web) or `apiURL` (iOS).
+    **Another possible cause:** A development build is still pointed at a local server through `apiUrl` (web and Android) or `apiURL` (iOS).
 
     **Solution:** Compare the IDs character by character, and make sure production builds use the default server.
   </Accordion>
 
   <Accordion title="Attributes are missing from a contact">
-    **Possible cause:** Anything over the limits is dropped without an error: more than 20 keys, a key over 40 characters, a value over 255 characters, nested objects or lists, or more than 8 KB in total. On iOS, a value that isn't a `String`, `Bool`, a number, or a `Date` is dropped on the device.
+    **Possible cause:** Anything over the limits is dropped without an error: more than 20 keys, a key over 40 characters, a value over 255 characters, nested objects or lists, or more than 8 KB in total. On iOS and Android, a value that isn't text, true/false, a number, or a date is dropped on the device.
 
     **Another possible cause:** Each `identify` call replaces the whole set. A key you left out of the latest call is gone.
 
